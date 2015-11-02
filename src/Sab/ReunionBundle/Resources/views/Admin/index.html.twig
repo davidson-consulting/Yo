@@ -1,0 +1,59 @@
+{% extends "::base.html.twig" %}
+{% block body %}
+    <div class="container">
+        <ul id="gn-menu" class="gn-menu-main">
+            <li class="gn-trigger">
+                <a class="gn-icon gn-icon-menu"><span>Menu</span></a>
+                <nav class="gn-menu-wrapper">
+                    <div class="gn-scroller">
+                        <ul class="gn-menu">
+                            <li><a href="{{path('_list_event')}}" class="glyphicon glyphicon-home"><span class="icon-name">Home</span></a></li>
+                            <li><a class="glyphicon glyphicon-cog"><span class="icon-name">Settings</span></a></li>
+                            <li><a class="glyphicon glyphicon-off" href="{{ path('fos_user_security_logout') }}"><span class="icon-name">Déconnexion</span></a></li>
+                        </ul>
+                    </div><!-- /gn-scroller -->
+                </nav>
+            </li>
+            <li><a href="{{path('_list_event')}}"><span>Admin</span></a></li>
+            <li class="add-event-li">
+                <div data-toggle="modal" data-target="#ModalAddEvent" value="Nouvel événement">
+                    <span class="glyphicon glyphicon-plus"></span><span>Nouvel événement</span>
+                </div>
+            </li>
+            {% block filterEvent %} {%endblock%}
+        {% block title_page %}{% endblock %}
+        <li><img src="{{asset('bundles/reunion/images/logoyo.png')}}" alt="YO!"/></li>
+    </ul>
+
+    {#            modal content    #}
+    <div class="modal fade" id="ModalAddEvent" role="dialog">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header modal-header-form">
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                </div>
+                <div class="modal-body modal-body-form modal-body-add-event">
+                    {{ render(controller("ReunionBundle:Admin:addEvent")) }}
+                </div>
+            </div>
+        </div>
+    </div>
+</div><!-- /container -->
+<div class="container list-event">
+{%block listevent %}{% endblock %}
+</div>
+<div class="detailEvent">
+{%block detailEvent %}{% endblock %}
+</div>
+{%block event_list_question %}{% endblock %}
+<script src="//code.jquery.com/jquery-1.11.3.min.js"></script>
+<script type="text/javascript" src="{{ asset('bundles/reunion/js/modernizr.custom.js') }}"></script>
+{#<script type="text/javascript" src="{{ asset('bundles/reunion/js/Chart.min.js') }}"></script>#}
+<script type="text/javascript" src="{{ asset('bundles/reunion/js/admin.js') }}"></script>
+<script type="text/javascript" src="{{ asset('bundles/reunion/js/gnmenu.js') }}"></script>
+{#<script type="text/javascript" src="{{ asset('bundles/reunion/js/stats.js') }}"></script>#}
+<script>
+    new gnMenu(document.getElementById('gn-menu'));
+</script>
+
+{% endblock %}    

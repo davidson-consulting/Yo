@@ -1,0 +1,85 @@
+
+{{form_errors(formEvent)}}
+<form action="{{path('_add_event')}}" method="POST" {{ form_enctype(formEvent)}}>
+
+    {#event#}
+    <div class="form-group">
+        {{ form_label(formEvent.createur, null ,{'label' :  "Nom du créateur" } ) }}
+        {{ form_widget(formEvent.createur, {'attr':{'class':'form-control createur'}}) }}
+        {{ form_errors(formEvent.createur) }}
+    </div>
+
+    <div class="form-group form-group-label-event">
+        {{ form_label(formEvent.labelEvent, null ,{'label' :  "Nom de l'événement" } ) }}
+        {{ form_widget(formEvent.labelEvent, {'attr':{'class':'form-control add-event-control','onblur':'checkErorsEvent(this);', 'data-name':'LabelEvent'}}) }}
+        {{ form_errors(formEvent.labelEvent) }}
+    </div>
+
+    <div class="form-group">
+        {{ form_label(formEvent.description, null ,{'label' :  "Description de l'événement" } ) }}
+        {{ form_widget(formEvent.description, {'attr':{'class':'form-control'}}) }}
+        {{ form_errors(formEvent.description) }}
+    </div>
+
+
+    {#user#}
+    <div class="form-group">
+        {{ form_label(formEvent.userUser.date_debut_event, null ,{ 'label' : "Date début de l'événement" }  ) }}
+        <input size="16" type="text" id="sab_reunionbundle_user_datePicker-date-debut" class="form-control form-control-date" data-date-format="dd MM yyyy hh:ii:ss" data-link-format="yyyy-mm-dd hh:ii:ss" data-link-field="sab_reunionbundle_event_userUser_date_debut_event" required="" autocomplete="off">
+        {{ form_widget(formEvent.userUser.date_debut_event, {'attr':{'class':'form-control hidden'}}) }}
+        {{ form_errors(formEvent.userUser.date_debut_event) }}
+    </div>
+
+    <div class="form-group">
+        {{ form_label(formEvent.userUser.date_fin_event, null ,{ 'label' : "Date fin de l'événement" }  ) }}
+        <input size="16" type="text" id="sab_reunionbundle_user_datePicker-date-fin" class="form-control form-control-date" data-date-format="dd MM yyyy hh:ii:ss" data-link-format="yyyy-mm-dd hh:ii:ss" data-link-field="sab_reunionbundle_event_userUser_date_fin_event" required="" autocomplete="off" />
+        {{ form_widget(formEvent.userUser.date_fin_event, {'attr':{'class':'form-control hidden'}}) }}
+        {{ form_errors(formEvent.userUser.date_fin_event) }}
+    </div>
+
+    <div class="form-group form-group-username">
+        {{ form_label(formEvent.userUser.username, null ,{ 'label' : "Identifiant" } ) }}
+        {{ form_widget(formEvent.userUser.username, {'attr':{'class':'form-control','onblur':'checkErorsEvent(this);', 'data-name':'Username'}}) }}
+        {{ form_errors(formEvent.userUser.username) }}
+    </div>
+
+    <div class="form-group form-group-password">
+        {{ form_label(formEvent.userUser.password, null ,{ 'label' : "Mot de passe" } ) }}
+        {{ form_widget(formEvent.userUser.password, {'attr':{'class':'form-control','onblur':'checkErorsEvent(this);', 'data-name':'Password'}}) }}
+        {{ form_errors(formEvent.userUser.password) }}
+    </div>
+
+    {#theme#}
+    
+   
+    <div class="form-group">
+        {{ form_label(formEvent.theme.fileProfilPicture, null ,{'label' :  "Image de profil de l'événement" } ) }}
+         <span>(taille < 1024k, format: jpeg, png, gif)</span>
+        {{ form_widget(formEvent.theme.fileProfilPicture, {'attr':{'required':'required'}}) }}
+        {{ form_errors(formEvent.theme.fileProfilPicture) }}
+    </div>
+
+    <div class="form-group">
+        {{ form_label(formEvent.theme.fileLogo, null ,{ 'label' : "Logo de l'événement" }  ) }}
+         <span>(taille < 1024k, format: jpeg, png, gif)</span>
+        {{ form_widget(formEvent.theme.fileLogo, {'attr':{'required':'required'}}) }}
+        {{ form_errors(formEvent.theme.fileLogo) }}
+    </div>
+
+    <div class="form-group">
+        {{ form_label(formEvent.theme.fileBackground, null ,{ 'label' : "Image de fond de l'événement" } ) }}
+         <span>(taille < 1024k, format: jpeg, png, gif)</span>
+        {{ form_widget(formEvent.theme.fileBackground, {'attr':{'required':'required'}}) }}
+        {{ form_errors(formEvent.theme.fileBackground) }}
+    </div>
+
+        <button type="submit" class="btn btn-lg btn-primary add-edit-event-Btn">Créer</button>
+
+    {{ form_widget(formEvent._token) }}
+    {{ form_rest(formEvent) }}
+
+
+
+</form>
+
+

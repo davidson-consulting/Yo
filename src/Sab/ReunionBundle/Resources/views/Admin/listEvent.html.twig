@@ -1,0 +1,123 @@
+{% extends "ReunionBundle:Admin:index.html.twig" %}
+{% block filterEvent %}
+    <li class="filtreEventAdmin">
+        <div>
+            <span>Filtrer les événements </span>
+            <select id="filtre_event" onchange="filtrer()">
+                <option value="tout" selected="selected">--Tout--</option>
+                <option value="ouvert" >Ouvert</option>
+                <option value="fermer" >Fermé</option>
+            </select>
+        </div>
+    </li>
+{%endblock%}
+
+
+{% block listevent %}
+
+    {% for message_notice_event in app.session.flashbag.get('event_sucess') %}
+        <div class="msgInfo">
+            <div class="alertInfo alert  alert-success alert-dismissible" role="alert">
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+                <span class="glyphicon glyphicon-ok" aria-hidden="true"></span><span class="msg-info-show">{{message_notice_event}}</span>
+            </div>
+        </div>
+    {%endfor %}
+
+    {% for message_notice_event in app.session.flashbag.get('event_error') %}
+        <div class="msgInfo">
+            <div class="alert alert-danger">
+                <a href="#" class="close" data-dismiss="alert">&times;</a>
+                <span class="glyphicon glyphicon-remove" aria-hidden="true"></span><span class="msg-info-show">{{message_notice_event}}</span>
+            </div>
+        </div>
+    {%endfor %}
+
+
+    <ul class="list-view-event">
+        {% for e in events %}
+            {% set idevent = e.getId() %}
+            {% set iduser = e.getUserUser().getId() %}
+            {% set password_decrypte = e.getUserUser().getPasswordDecrypte() %}
+            {% set password = e.getUserUser().decrypt(password_decrypte) %}
+            {% set userName = e.getUserUser().getUserName() %}
+            {% set pathLogo = e.getTheme().getPathFileLogo(idevent) %}
+            {% set pathBanner = e.getTheme().getPathFileProfil(idevent) %}
+            {% set pathBackground = e.getTheme().getPathFileBackground(idevent) %} 
+            {% set arrayQuestionCount = questionRepository.countQuestion(idevent) %}
+            {% set enabled = e.getUserUser().enabled() %}
+            {% set locked = e.getUserUser().locked %}
+            {% if  not locked %}
+                <li class="event_{{idevent}} {%if enabled %}event_enabled{%else%}event_disabled{%endif%}">
+                    <div class="view-event">
+                        <span class="view-event-label">
+                            {{e.labelEvent}}
+                            <a href="#"><span class="voirPassword glyphicon glyphicon-eye-open" title="voir le mot de passe" data-toggle="modal" data-target="#exampleModal_{{idevent}}" data-whatever="@mdo"></span></a>
+                            <a href="#"><span class="glyphicon glyphicon-edit" title="editer" data-toggle="modal" data-target="#editer_{{idevent}}"></span></a>
+                            <a href="#" data-event="{{idevent}}" onclick="deleteEvent(this);" ><span class="glyphicon glyphicon-trash" title="supprimer"></span></a>
+                        </span>
+
+                        <span class="view-event-question-count count_admin_{{idevent}} badge">
+                            {%for count in arrayQuestionCount%}
+                                {% if count >= 2 %}
+                                    {{ count }} Questions
+                                {% else %}
+                                    {{ count }} Question
+                                {% endif %}
+                            {% endfor %} 
+                        </span>
+                        <a href="{{ path('_event_detail',{'id':idevent})}}"><img src="{{asset(pathBanner)}}" class="img-thumbnail" /></a>
+
+                        <div class="onoffswitch">
+                            <input type="checkbox" name="onoffswitch_{{idevent}}" class="onoffswitch-checkbox" id="myonoffswitch_{{idevent}}" {% if enabled %}checked{%endif%}>
+                            <label id="switchEvent" class="onoffswitch-label switch_label_{{idevent}}" for="myonoffswitch_{{idevent}}" data-statut="{% if enabled %}on{%else%}off{%endif%}" data-event="{{idevent}}" onclick="switchEvent(this);">
+                                <span class="onoffswitch-inner"></span>
+                                <span class="onoffswitch-switch"></span>
+                            </label>
+                        </div>
+                    </div>
+                </li>
+            {% endif %}   
+            {#voir le mot de passe#}
+            <div class="modal fade" id="exampleModal_{{idevent}}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel">
+                <div class="modal-dialog" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                            <h4 class="modal-title" id="exampleModalLabel">{{e.labelEvent}}</h4>
+                        </div>
+                        <div class="modal-body">
+                            <form>
+                                <div class="form-group">
+                                    <label for="recipient-name" class="control-label">Identifiant:</label>
+                                    <span><p>{{userName}}</p></span>
+                                </div>
+                                <div class="form-group">
+                                    <label for="message-text" class="control-label">Mot de passe:</label>
+                                    <span><p>{{password}}</p></span>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            {#éditer#}
+            <div class="modal fade" id="editer_{{idevent}}" tabindex="-1" role="dialog">
+                <div class="modal-dialog" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                            <h4 class="modal-title" id="exampleModalLabel">Editer : {{e.labelEvent}}</h4>
+                        </div>
+                        <div class="modal-body">
+                            {{ render(controller("ReunionBundle:Admin:editEvent", {'id':e.getId()})) }}
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        {% endfor %}
+    </ul>
+{% endblock %}

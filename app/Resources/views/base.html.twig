@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="fr">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <title>{% block title %}Your Opinion!{% endblock %}</title>
+        {% block stylesheets %}
+            <link rel="stylesheet" type="text/css" href="{{asset('bootstrap/css/bootstrap.min.css')}}" />
+            <link rel="stylesheet" type="text/css" href="{{asset('bootstrap/bootstrap-table/bootstrap-table.min.css')}}" />
+            <link rel="stylesheet" type="text/css" href="{{asset('bootstrap/datepicker/css/bootstrap-datetimepicker.min.css')}}" />
+            <link rel="stylesheet" type="text/css" href="{{asset('bundles/reunion/css/app.css')}}" />
+            <link rel="stylesheet" type="text/css" href="{{asset('bundles/reunion/css/component.css')}}" />
+            <link rel="stylesheet" type="text/css" href="{{asset('bundles/reunion/css/admin.css')}}" />
+            <link rel="stylesheet" type="text/css" href="{{asset('bundles/reunion/css/safari.css')}}" />
+        {% endblock %}
+        <link rel="icon" type="image/png" sizes="32x32" href="{{ asset('favicon.png') }}" />
+    </head>
+    <body>
+    {% block body %}{% endblock %}
+    {% block javascripts %}
+        <script src="//code.jquery.com/jquery-1.11.3.min.js"></script>
+        <script type="text/javascript" src="http://localhost:8001/client.js"></script>
+        <script type="text/javascript" src="http://cdnjs.cloudflare.com/ajax/libs/datejs/1.0/date.min.js"></script>
+        {% javascripts
+            'bootstrap/js/bootstrap.min.js'
+            'bootstrap/bootstrap-table/bootstrap-table.min.js'
+            'bootstrap/datepicker/js/bootstrap-datetimepicker.min.js'
+            'bootstrap/bootstrap-table/locale/bootstrap-table-fr-FR.min.js'
+            'bootstrap/datepicker/js/locales/bootstrap-datetimepicker.fr.js'
+            '@ReunionBundle/Resources/public/js/app.js'
+            '@ReunionBundle/Resources/public/js/fayeClient.js'
+        %}
+        <script type="text/javascript" src="{{ asset_url }}" charset="UTF-8" ></script>
+        <script src="{{ asset('bundles/fosjsrouting/js/router.js') }}"></script>
+        <script src="{{ path('fos_js_routing_js', {'callback': 'fos.Router.setData'}) }}"></script>
+        {% endjavascripts %}
+
+    {% endblock %}
+</body>
+</html>

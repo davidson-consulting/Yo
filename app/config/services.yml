@@ -1,0 +1,17 @@
+parameters:
+    
+    sab.reunion.faye.endpoint:      'http://localhost:8001/'
+    sab.reunion.faye.adapter.class: 'Nc\FayeClient\Adapter\CurlAdapter'
+    sab.reunion.faye.client.class:  'Nc\FayeClient\Client'
+    
+
+services:
+    
+    sab.reunion.faye.adapter:
+        class:  %sab.reunion.faye.adapter.class%
+        
+    sab.reunion.faye.client:
+        class:  %sab.reunion.faye.client.class%
+        arguments:
+            - @sab.reunion.faye.adapter
+            - %sab.reunion.faye.endpoint%

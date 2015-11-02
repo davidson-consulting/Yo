@@ -1,0 +1,21 @@
+#authentification
+reunion:
+    resource: "@ReunionBundle/Resources/config/routing.yml"
+    prefix:   /
+    
+
+#admin
+admin:
+    resource:  "@ReunionBundle/Resources/config/routing_admin.yml" 
+    prefix:     /dashboard/admin
+
+
+#user
+user:
+    resource:  "@ReunionBundle/Resources/config/routing_user.yml"
+    prefix:     /dashboard/user
+
+
+#jsRoutingBundle Routing
+fos_js_routing:
+    resource: "@FOSJsRoutingBundle/Resources/config/routing/routing.xml"

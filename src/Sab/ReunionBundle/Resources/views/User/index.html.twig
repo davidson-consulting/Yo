@@ -1,0 +1,231 @@
+{% extends "::base.html.twig" %}
+
+{% set idevent = event.getId() %}
+{% set pathLogo = event.getTheme().getPathFileLogo(idevent) %}
+{% set pathBanner = event.getTheme().getPathFileProfil(idevent) %}
+{% set pathBackground = event.getTheme().getPathFileBackground(idevent) %}
+
+
+{% block body %}
+    <div class="body-app" style="background-image: url('{{asset(pathBackground)}}')">
+        <div class="container nameApplication">
+             <img src="{{asset('bundles/reunion/images/logoyo.png')}}" alt="YO!"/>
+        </div>
+
+
+        <div class="container banner" style="background-image: url('{{asset(pathBanner)}}')">
+            <span class="nameEvent">{{event.labelEvent}}</span>
+        </div>
+        <div class="container dashBoardBody">
+
+            <div class="logo">
+                <img src="{{asset(pathLogo)}}" alt="logo-davidson" class="img-circle" />
+            </div>
+
+            {% for message_notice in app.session.flashbag.get('notice') %}
+                <div class="msgInfo">
+                    <div class="alertInfo alert  alert-success alert-dismissible" role="alert">
+                        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                        <span class="glyphicon glyphicon-ok" aria-hidden="true"></span><span class="msg-info-show">{{message_notice}}</span>
+                    </div>
+                </div>
+            {%endfor %}
+
+            <nav class="menu">
+                <span class="glyphicon glyphicon-menu-hamburger"></span>
+            </nav>
+            <div class="infoEvent">
+                <div class="decompte">
+                    <span class="glyphicon glyphicon-time" aria-hidden="true"></span>
+                    <span>Nombre de jours avant l'événement :</span>
+                    <div class="info-decompte">
+                        <div id="days" class="info-event"></div>
+                        <div id="hour"></div>
+                        <div id="minute"></div>
+                    </div>
+                    {#                 <div id="seconds"></div>#}
+                    <div id="fin"></div>
+                </div>
+                <div class="nb-question-posee">
+                    {% for q, key in countQuestion %}
+                        <span class="glyphicon glyphicon-check" aria-hidden="true"></span>
+                        <span>Nombre de questions posées :</span> 
+                        <div class="info-event count_{{event.id}}">
+                            {% if key == 0 or key == 1 %}
+                                {{key}} Question
+                            {% else %}
+                                {{key}} Questions
+                            {% endif %}    
+                        </div>
+                    {% endfor %}
+                </div>
+                <span hidden="hidden" class="dateDebutEvent">{{dateDebutEvent | date('M d, Y H:i:s', "Europe/Paris")}}</span>
+
+                <div class="deconnexion">
+                    <span class="glyphicon glyphicon-off" aria-hidden="true"></span>
+                    <span>
+                        {% if is_granted("IS_AUTHENTICATED_REMEMBERED") %}
+                            <a href="{{ path('fos_user_security_logout') }}">
+                                {{ 'layout.logout'|trans({}, 'FOSUserBundle') }}
+                            </a>
+                        {% else %}
+                            <a href="{{ path('fos_user_security_logout') }}">{{ 'layout.login'|trans({}, 'FOSUserBundle') }}</a>
+                        {% endif %}
+                    </span>
+                </div>
+            </div>
+
+            <div id="containerQuestion"> 
+                <h2 id="show_question_title">Questions :
+                    <span class="addQuestionMobile label label-info">
+                        <span class="glyphicon glyphicon-plus"></span>
+                        {#<span class="addQuestion buttonAddQuestion" data-toggle="modal" data-target="#ModalAddQuestion">
+                            Nouvelle question
+                        </span>#}
+                        <span class="addQuestion buttonAddQuestion">
+                            Nouvelle question
+                        </span>
+                    </span>
+                </h2>
+                <div class="list-question">
+                    <div class="emptyQuestion" hidden="hidden"></div>
+                    {% for q in questions %}
+                        <section class="question">
+                            <section class="blockLike">
+                                <div class="nbLike">
+                                    <span class="nbLikeValue_{{q.id}}">{{q.nbLike}}</span>
+                                </div>
+                                <div class="likeButton"> 
+                                    <div class='likebutton' onclick='updateLike(this)' data-name="{{q.id}}" data-event="{{q.event.id}}"></div>
+                                </div>
+
+                                <div class="nbDisLike">
+                                    <span class="nbDisLikeValue_{{q.id}}">{{q.nbDisLike}}</span>
+                                </div>
+                                <div class="likeButton"> 
+                                    <div class='disLikebutton' onclick='updateDislike(this)' data-name="{{q.id}}" data-event="{{q.event.id}}"></div>
+                                </div>
+                            </section>
+
+                            <section class="blockContenuQuestion">
+
+                                {% if q.isfocus %}
+                                    <span class="iconFavo_{{q.id}} icon_focus icon_focus_hidden_{{q.id}}">
+                                        <img src="{{asset("bundles/reunion/images/favorite.png")}}" alt="favoris" />
+                                    </span>
+                                {% endif %}
+
+                                <div class="contenuQuestion text-left blockContenuFocusQuestion_{{q.id}}">
+                                    <p>{{q.contenu}}</p>
+                                </div>
+                                <section class="auteur">
+                                    posté par :
+                                    {% if q.auteur is not null %}
+                                        <span>{{q.auteur}} - </span>
+                                    {% else %}
+                                        <span>Anonyme - </span>
+                                    {% endif %}
+                                    <span class="dataPublication">{{ q.datePublication.date | date('d/m/Y à H:i:s') }}</span>
+                                </section>        
+                            </section>
+                        </section>
+                    {% endfor %}
+                </div>
+
+
+                <div class="addQuestion buttonAddQuestion" value="Nouvelle question">
+                    <div class="icon-add-question"></div>
+                    <span class="new-question-label">Nouvelle question</span>
+                </div> 
+
+
+                {#  question focus#}
+                <div class="focus_question_{{idevent}}"></div>
+                <!-- Button trigger modal -->
+
+
+                <!-- Modal Focus -->
+                <div class="modal fade" id="ModalFocus_{{idevent}}" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+                    <div class="modal-dialog" role="document">
+                        <div class="modal-content formAddQuestion">
+                            <div class="modal-header modal-header-form">
+                                <h4 class="modal-title-focus">Question Focus !!!</h4>
+                                <span class="icon_focus">
+                                    <img src="{{asset("bundles/reunion/images/favorite.png")}}" alt="favoris" />
+                                    <button type="button" class="close_focus" data-dismiss="modal">&times;</button>
+                                </span>
+                            </div>
+                            <div class="modal-body">
+                                <section class="question_focus">
+                                    <section class="blockLike">
+                                        <div class="nbLike">
+                                            <span class="nbLikeValue_focus"></span>
+                                        </div>
+                                        <div class="likeButton"> 
+                                            <div class='likebutton'></div>
+                                        </div>
+
+                                        <div class="nbDisLike">
+                                            <span class="nbDisLikeValue_focus"></span>
+                                        </div>
+                                        <div class="likeButton"> 
+                                            <div class='disLikebutton'></div>
+                                        </div>
+                                    </section>
+
+                                    <section class="blockContenuQuestion">
+                                        <div class="contenuQuestion contenuQuestionFocus text-left">
+                                            <p></p>
+                                        </div>
+                                        <section class="auteur">
+                                            posté par :
+                                            <span class="author_focus"></span>
+                                            le
+                                            <span class="datePublication_focus"></span>
+                                        </section>        
+                                    </section>
+                                    <div class="clear"></div>
+                                </section>
+                                <div class="clear"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+
+                {#            modal content    #}
+                <div class="modal fade" id="ModalAddQuestion" role="dialog">
+                    <div class="modal-dialog">
+                        <div class="modal-content formAddQuestion">
+                            <div class="modal-header modal-header-form">
+                                <button type="button" class="close close-mobile" data-dismiss="modal">&times;</button>
+                                <h4 class="modal-title">Posez votre question :</h4>
+                            </div>
+                            <div class="modal-body modal-body-form">
+                                <form action="{{path('user_dashboard')}}" method="POST" {{ form_enctype(form)}} id="form_add_question">
+                                    <div class="form-contenu-question">
+                                        {{ form_widget(form.contenu, {'attr':{'class':'form-control'}})}}
+                                        {{ form_errors(form.contenu)}}
+                                    </div>
+                                    <div class="form-auteur-question">
+                                        <label class="form-name-auteur">
+                                            <span>Votre nom:</span>
+                                            <span>facultatif</span>
+                                        </label>
+                                        <div class="form-input-auetur">    
+                                            {{ form_widget(form.auteur, {'attr':{'class':'form-auteur-input'}})}}
+                                            {{ form_errors(form.auteur)}}
+                                        </div>
+                                        {{ form_rest(form) }}
+                                    </div>
+                                </form>  
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div> 
+        </div>
+    </div>
+{% endblock %}    

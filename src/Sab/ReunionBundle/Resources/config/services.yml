@@ -1,0 +1,4 @@
+services:
+#    logout_service:
+#        class: Sab\ReunionBundle\Service\LogoutService
+#        arguments: [@security.context,@session]

@@ -1,0 +1,123 @@
+body:first-of-type .blockContenuQuestion{
+    float: none;
+    /*padding-bottom: 11%;*/
+}/*
+body:first-of-type .auteur{
+    float: none;
+    padding-bottom: 15px;
+    margin-bottom: 0px;
+    left: 50%;
+    position: relative;
+}
+*/body:first-of-type .question{
+    margin: 0px 0px 6px 0px;
+    float: right;
+}
+body:first-of-type .contenuQuestion{
+    width: 100%;
+}
+
+
+
+/*iphone 4*/
+/*@media(max-width: 320px){
+
+    body:first-of-type .blockContenuQuestion{
+        width: 100%;
+        float: none;
+    }
+
+    body:first-of-type .auteur{
+        padding-top: 20px;
+        float: none;
+        padding-bottom: 15px;
+        margin-bottom: 0px;
+        left: 50%;
+        position: relative;
+    }
+
+}
+
+@media screen and (orientation:portrait) and (max-width: 480px)
+{
+
+    body:first-of-type .blockContenuQuestion{
+        width: 100%;
+        float: none;
+    }
+
+    body:first-of-type .auteur{
+        padding-top: 20px;
+        float: none;
+        padding-bottom: 15px;
+        margin-bottom: 0px;
+        left: 50%;
+        position: relative;
+    }
+}
+
+@media screen and (orientation:landscape) and (max-width: 568px){
+    body:first-of-type .blockContenuQuestion{
+        width: 100%;
+        float: none;
+    }
+    body:first-of-type .auteur{
+        padding-top: 20px;
+        float: none;
+        padding-bottom: 15px;
+        margin-bottom: 0px;
+        left: 50%;
+        position: relative;
+    }
+}
+@media screen and (orientation:landscape) and (max-width: 667px){
+
+    body:first-of-type .blockContenuQuestion{
+        width: 100%;
+        float: none;
+    }
+    body:first-of-type .auteur{
+        padding-top: 20px;
+        float: none;
+        padding-bottom: 15px;
+        margin-bottom: 0px;
+        left: 50%;
+        position: relative;
+    }
+
+}
+
+
+
+
+@media screen and (orientation:landscape) and (max-width: 774px){
+    body:first-of-type .blockContenuQuestion{
+        width: 100%;
+        float: none;
+    }
+    body:first-of-type .auteur{
+        padding-top: 20px;
+        float: none;
+        padding-bottom: 15px;
+        margin-bottom: 0px;
+        left: 50%;
+        position: relative;
+    }
+
+}
+
+@media screen and (orientation:portrait) and (min-width: 501px){
+    body:first-of-type .question, .blockContenuQuestion{
+        width: 100%;
+        float: none;
+    }
+
+    body:first-of-type .auteur{
+        padding-right: 17px;
+        float: none;
+        padding-bottom: 15px;
+        margin-bottom: 0px;
+        left: 50%;
+        position: relative;
+    }
+}*/

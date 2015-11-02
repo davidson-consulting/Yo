@@ -1,0 +1,56 @@
+security:
+   
+    encoders:
+        Sab\ReunionBundle\Entity\User:  sha512
+
+  
+    role_hierarchy:
+        ROLE_USER:         ROLE_USER  
+        ROLE_ADMIN:        ROLE_ADMIN
+
+    
+    providers:
+       fos_userbundle:
+           id:  fos_user.user_provider.username
+
+
+    firewalls:
+      
+        dev:
+            pattern:  ^/(_(profiler|wdt)|css|images|js)/
+            security: false
+       
+        
+        main:
+            pattern:  ^/
+            form_login:
+                login_path:             _check_user
+                check_path:             /login_check
+                provider:               fos_userbundle
+                csrf_provider:          form.csrf_provider
+                
+                target_path_parameter:          _target_path
+                default_target_path:            _check_user
+                
+                failure_path:               /login
+                failure_path_parameter:     _failure_path
+                remember_me:                true
+
+                
+            logout:
+                path:                   /logout
+                target:                 /login
+                invalidate_session:     true
+                
+            remember_me:
+                key:        %secret%
+
+            anonymous: true
+          
+
+    access_control:
+        - { path: ^/login$, roles: IS_AUTHENTICATED_ANONYMOUSLY }
+        - { path: ^/dashboard/admin/*, roles: ROLE_ADMIN }
+        - { path: ^/dashboard/user/*, roles: ROLE_USER }
+#        - { path: ^/user/dashboard/*, roles: [ROLE_USER, ROLE_ADMIN] }
+#        - { path: ^/dashboard/*, roles: [ROLE_USER, ROLE_ADMIN] }

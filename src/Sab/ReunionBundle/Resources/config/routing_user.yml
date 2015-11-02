@@ -1,0 +1,35 @@
+user_dashboard:
+    path:       /
+    defaults:   { _controller: ReunionBundle:Question:addQuestion  }
+
+_user_liker_question:
+    path:       /updateLike/{id}
+    defaults:   { _controller: ReunionBundle:Question:updateLike }
+    requirements:
+        id:         \d+
+    options:
+        expose: true
+        
+_user_disliker_question:
+    path:       /updateDisLike/{id}
+    defaults:   { _controller: ReunionBundle:Question:updateDisLike }
+    requirements:
+        id:         \d+
+    options:
+        expose: true
+        
+_user_decremente_liker_question:
+    path:       /decrementeLike/{id}
+    defaults:   { _controller: ReunionBundle:Question:decrementeLike }
+    requirements:
+        id:         \d+
+    options:
+        expose: true
+
+_user_decremente_disliker_question:
+    path:       /decrementeDisLike/{id}
+    defaults:   { _controller: ReunionBundle:Question:decrementeDislike }
+    requirements:
+        id:         \d+
+    options:
+        expose: true

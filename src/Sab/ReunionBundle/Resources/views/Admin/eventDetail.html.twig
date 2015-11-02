@@ -1,0 +1,35 @@
+{% extends "ReunionBundle:Admin:index.html.twig" %}
+{%block detailEvent %}
+
+    {% set idevent = event.getId() %}
+    {% set pathLogo = event.getTheme().getPathFileLogo(idevent) %}
+    {% set pathBanner = event.getTheme().getPathFileProfil(idevent) %}
+    {% set pathBackground = event.getTheme().getPathFileBackground(idevent) %} 
+
+    <div class="event-detail-banner">
+        <span class="nameEvent">
+            {{event.labelEvent}}
+        </span>
+        <img src="{{asset(pathBanner)}}"/>
+        <span class="logo">
+            <img src="{{asset(pathLogo)}}" class="img-circle"/>
+        </span>
+
+        <div class="container block-detail-event">
+            
+            <div class="col-md-12">
+                <div class="ch-item ch-img-1">				
+                    <div class="ch-info-wrap">
+                        <div class="ch-info">
+                            <div class="ch-info-front ch-img-1"></div>
+                            <div class="ch-info-back">
+                                <h3>La Liste des questions</h3>
+                                <a href="{{path('_event_list_question',{'id':idevent})}}"><p>Voir</p></a>
+                            </div>	
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}    

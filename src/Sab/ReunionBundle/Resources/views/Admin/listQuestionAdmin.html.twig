@@ -1,0 +1,33 @@
+{% extends "ReunionBundle:Admin:index.html.twig" %}
+{% set idevent = event.getId() %}
+{% set labelEvent = event.getLabelEvent() %}
+
+
+{% block title_page %}
+    <li class="list-question-admin">
+        <a href="{{path('_event_detail',{'id':idevent})}}">{{labelEvent}}</a> <span class="next-button"> > </span><span class="glyphicon glyphicon-th-list icon-list-question-admin"></span><span>Liste des questions</span>
+    </li>   
+{% endblock %}
+{%block event_list_question %}
+
+
+
+    <div class="container">
+        <table class="table-question-admin" data-url="{{path("_load_question_json",{'id':idevent})}}" 
+               data-sort-name="nbLike" data-sort-order="desc" data-toggle="table" data-show-refresh="true" 
+               data-show-toggle="true" data-show-columns="true" data-search="true" data-row-style="rowStyleFocus"
+               data-pagination="true">
+            <thead>
+                <tr>
+                    <th data-field="contenu" data-align="center" data-sortable="true">Description</th>
+                    <th data-field="auteur" data-sortable="true"><span class="glyphicon glyphicon-user likeButton-admin"></span>Auteur</th>
+                    <th data-field="nbLike" data-sortable="true"><span class="glyphicon glyphicon-hand-right likeButton-admin"></span>Nombre de like</th>
+                    <th data-field="nbDislike" data-sortable="true"><span class="glyphicon glyphicon-thumbs-down dislikeButton-admin"></span>Nombre de dislike</th>
+                    <th data-field="datePublication" data-sortable="true"><span class="glyphicon glyphicon-time datePublication-admin"></span>Date de publication</th>
+                    <th data-field="fav" data-sortable="true"></th>
+                </tr>
+            </thead>
+        </table>
+    </div>
+
+{% endblock %}

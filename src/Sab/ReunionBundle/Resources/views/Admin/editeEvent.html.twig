@@ -1,0 +1,87 @@
+{% set dateDebutEvent = event.getUserUser.getDateDebutEvent().date|date('d-m-Y h:i:s') %} 
+{% set dateFinEvent = event.getUserUser.getDateFinEvent().date|date('d-m-Y h:i:s') %} 
+{% set idEvent = event.getId() %} 
+{% set user = event.getUserUser() %} 
+
+{% set password_cypter = user.getPasswordDecrypte() %} 
+{% set password_decypter = user.decrypt(password_cypter) %} 
+
+
+
+
+<form action="{{path('_edit_event',{'id':idEvent})}}" method="POST" {{ form_enctype(formEvent)}}>
+
+
+        {#event#}
+        <div class="form-group">
+            {{ form_label(formEvent.createur, null ,{'label' :  "Nom du créateur" } ) }}
+            {{ form_widget(formEvent.createur, {'attr':{'class':'form-control createur'}}) }}
+            {{ form_errors(formEvent.createur) }}
+        </div>
+
+        <div class="form-group">
+            {{ form_label(formEvent.labelEvent, null ,{'label' :  "Nom de l'événement" } ) }}
+            {{ form_widget(formEvent.labelEvent, {'attr':{'class':'form-control'}}) }}
+            {{ form_errors(formEvent.labelEvent) }}
+        </div>
+
+        <div class="form-group">
+            {{ form_label(formEvent.description, null ,{'label' :  "Description de l'événement" } ) }}
+            {{ form_widget(formEvent.description, {'attr':{'class':'form-control'}}) }}
+            {{ form_errors(formEvent.description) }}
+        </div>
+
+
+        {#user#}
+        <div class="form-group">
+            {{ form_label(formEvent.userUser.date_debut_event, null ,{ 'label' : "Date début de l'événement" }  ) }}
+            {{ form_widget(formEvent.userUser.date_debut_event, {'attr':{'class':'form-control form-control-date', 'value':dateDebutEvent, 'data-link-format':'yyyy-mm-dd hh:ii:ss','data-date-format':'dd-mm-yyyy hh:ii:ss', 'autocomplete':'off'}}) }}
+            {{ form_errors(formEvent.userUser.date_debut_event) }}
+        </div>
+
+        <div class="form-group">
+            {{ form_label(formEvent.userUser.date_fin_event, null ,{ 'label' : "Date fin de l'événement" }  ) }}
+            {{ form_widget(formEvent.userUser.date_fin_event, {'attr':{'class':'form-control form-control-date', 'value':dateFinEvent, 'data-link-format':'yyyy-mm-dd hh:ii:ss','data-date-format':'dd-mm-yyyy hh:ii:ss', 'autocomplete':'off'}}) }}
+            {{ form_errors(formEvent.userUser.date_fin_event) }}
+        </div>
+
+        <div class="form-group">
+            {{ form_label(formEvent.userUser.username, null ,{ 'label' : "identifiant" } ) }}
+            {{ form_widget(formEvent.userUser.username, {'attr':{'class':'form-control'}}) }}
+            {{ form_errors(formEvent.userUser.username) }}
+        </div>
+
+        <div class="form-group">
+            {{ form_label(formEvent.userUser.password, null ,{ 'label' : "mot de passe" } ) }}
+            {{ form_widget(formEvent.userUser.password, {'attr':{'class':'form-control','value':password_decypter}}) }}
+            {{ form_errors(formEvent.userUser.password) }}
+        </div>
+
+        {#theme#}
+        <div class="form-group">
+            {{ form_label(formEvent.theme.fileProfilPicture, null ,{'label' :  "Image de profil de l'événement" } ) }}
+             <span>(taille < 1024k, format: jpeg, png, gif)</span>
+            {{ form_widget(formEvent.theme.fileProfilPicture) }}
+            {{ form_errors(formEvent.theme.fileProfilPicture) }}
+        </div>
+
+        <div class="form-group">
+            {{ form_label(formEvent.theme.fileLogo, null ,{ 'label' : "Logo de l'événement" }  ) }}
+             <span>(taille < 1024k, format: jpeg, png, gif)</span>
+            {{ form_widget(formEvent.theme.fileLogo) }}
+            {{ form_errors(formEvent.theme.fileLogo) }}
+        </div>
+
+        <div class="form-group">
+            {{ form_label(formEvent.theme.fileBackground, null ,{ 'label' : "Image de fond de l'événement" } ) }}
+             <span>(taille < 1024k, format: jpeg, png, gif)</span>
+            {{ form_widget(formEvent.theme.fileBackground) }}
+            {{ form_errors(formEvent.theme.fileBackground) }}
+        </div>
+
+        <button type="submit" class="btn btn-lg btn-primary">Mettre à jour</button>
+        {{ form_widget(formEvent._token) }}
+        {{ form_rest(formEvent) }}
+
+    </form>
+

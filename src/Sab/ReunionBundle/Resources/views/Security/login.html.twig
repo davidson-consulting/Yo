@@ -1,0 +1,36 @@
+{% extends "ReunionBundle::layout.html.twig" %}
+
+{% trans_default_domain 'FOSUserBundle' %}
+
+{% block fos_user_content %}
+
+    {% if error %}
+        <div class="alert alert-danger">
+            <a href="#" class="close" data-dismiss="alert">&times;</a>
+            <div>{{ error.messageKey|trans(error.messageData, 'security') }}</div>
+        </div>
+    {% endif %}
+
+
+    <form action="{{ path("fos_user_security_check") }}" method="post">
+        <input type="hidden" name="_csrf_token" value="{{ csrf_token }}" />
+
+        <div class="form-group">
+            <label class="loginText text-center" for="username">Login</label>
+            <input type="text" class="form-control loginInput" id="username" name="_username" value="{{ last_username }}" required="required" />
+        </div>
+
+        <div class="form-group">
+            <label class="passwordText text-center" for="password">Mot de passe</label>
+            <input type="password" class="form-control passwordInput" id="password" name="_password" required="required" />
+        </div>
+
+        <div class="form-group">
+            <input type="checkbox" id="remember_me" name="_remember_me" value="on" />
+            <label for="remember_me">{{ 'security.login.remember_me'|trans }}</label>
+        </div>
+
+        <input class="form-control connexion" type="submit" id="_submit" name="_submit" data-loading-text="connexion en cours..." autocomplete="off" value="{{ 'security.login.submit'|trans }}" />
+    </form>
+
+{% endblock fos_user_content %}

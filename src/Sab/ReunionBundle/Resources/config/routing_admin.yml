@@ -1,0 +1,65 @@
+admin_dashboard:
+    path:     / 
+    defaults: { _controller: ReunionBundle:Admin:index }
+    
+_add_event:
+    path:   /addEvent
+    defaults: { _controller: ReunionBundle:Admin:addEvent }
+
+_edit_event:
+    path:   /editEvent/{id}
+    defaults: { _controller: ReunionBundle:Admin:editEvent }
+ 
+_list_event:
+    path:   /listEvent
+    defaults: { _controller: ReunionBundle:Admin:listEvent }
+
+_event_detail:
+    path:   /event/{id}
+    defaults: { _controller: ReunionBundle:Admin:eventDetail }
+
+_event_list_question:
+    path:   /event/{id}/list-question/
+    defaults: { _controller: ReunionBundle:Admin:eventListQuestion }    
+    
+_cloturer_event:
+    path:  /cloturerEvent/{id}
+    defaults: { _controller: ReunionBundle:Admin:cloturerEvent }
+    requirements:
+        id:     \d+
+    options:
+        expose: true
+
+_ouvire_event:
+    path:  /ouvrireEvent/{id}
+    defaults: { _controller: ReunionBundle:Admin:ouvrireEvent }
+    requirements:
+        id:         \d+
+    options:
+        expose: true
+        
+_delete_event:
+    path:  /deleteEvent/{id}
+    defaults: { _controller: ReunionBundle:Admin:deleteEvent }
+    requirements:
+        id:         \d+
+    options:
+        expose: true
+
+_load_question_json:
+    path:   /loadquestion/{id}
+    defaults: { _controller : ReunionBundle:Admin:loadQuestionJson }
+    options:
+        expose: true
+        
+_check_errors_event:
+    path:       /checkErrors
+    defaults:   {_controller: ReunionBundle:Admin:ckechErrors }
+    options:
+        expose: true
+
+_focus_question:
+    path:       /focusQuestion
+    defaults:   { _controller: ReunionBundle:Admin:focusQuestion }
+    options:
+        expose: true

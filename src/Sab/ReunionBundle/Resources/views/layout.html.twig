@@ -1,0 +1,16 @@
+{% extends "::base.html.twig" %}
+{% block body %}
+    <div class="body-logo">
+        <section id="logo" class="container">
+            <img src="{{asset('bundles/reunion/images/logoyo.png')}}" alt="YO!"/>
+        </section>
+        
+        <div id="containerLogin" class="row">
+            <h1 class="text-center bienvenue">Bienvenue !</h1>
+            <div id="Authentification">
+                {% block fos_user_content %}
+                {% endblock fos_user_content %}
+            </div>
+        </div>
+    </div>
+{% endblock %}

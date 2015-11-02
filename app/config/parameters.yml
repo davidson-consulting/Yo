@@ -1,0 +1,17 @@
+#This file is auto-generated during the composer install
+parameters:
+    database_driver: pdo_mysql
+    database_host: 127.0.0.1
+    database_port: null
+    database_name: appreunion
+    database_user: root
+    database_password: null
+    mailer_transport: smtp
+    mailer_host: 127.0.0.1
+    mailer_user: null
+    mailer_password: null
+    locale: fr
+    secret: 0dcb700449ace93ce8441c27ff1a55a9dcc14f14
+#   root_path_local:    C:/wamp/www
+    root_path_local:    /var/www
+    path_host:          http://localhost
