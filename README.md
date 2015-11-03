@@ -1,8 +1,6 @@
 #Your opinion !
-=============
 
 ##Description du projet :
-=====================
 
 Your Opinion ! est une application web responsive qui fonction en temps réel pour différentes manifestations / évènements / séminaires, colloques, discours, conférences, etc.).
 L’objectif de l’application est de permettre aux différentes personnes, qui sont autorisées à se connecter à tel ou tel évènement, 
@@ -11,26 +9,25 @@ ensuite l’administrateur (via le back office) pourra mettre en avant une quest
 ainsi pourra répondre aux questions les plus pertinentes.
 
 ##Dépendances :
-==================
+
     + Php5 / mysql
     + Composer
     + Node js (faye-client)
 
 ##Démontration:
-================
     
 	+ Backend :
-	===========
+	
 ![backend](demoGif/backend.gif)
 
 
 	+ Front end :
-	=============
+	
 ![frontend](demoGif/frontend.gif)
 
 
 ##Intégration :
-================
+
 
 Vous souhaitez que l'on intègre cette application avec vous, 
 alors n'hésitez pas à contacter par mail l'équipe IT / Web de Davidson à l'adresse suivante : davidson@davidson.fr
