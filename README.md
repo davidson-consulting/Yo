@@ -2,11 +2,10 @@
 
 ##Description du projet :
 
-Your Opinion ! est une application web responsive qui fonction en temps réel pour différentes manifestations / évènements / séminaires, colloques, discours, conférences, etc.).
-L’objectif de l’application est de permettre aux différentes personnes, qui sont autorisées à se connecter à tel ou tel évènement, 
-de poser leurs questions  et de "liké" ou "disliké" telle ou telle question, 
-ensuite l’administrateur (via le back office) pourra mettre en avant une question via un POP-UP et jouer sur le ranking des questions et 
-ainsi pourra répondre aux questions les plus pertinentes.
+Your Opinion ! est une application web responsive qui fonctionne en temps réel pour différentes manifestations / évènements / séminaires, colloques, discours, conférences, etc.
+L’objectif de cette application est de permettre aux utilisateurs, en se connectant à tel ou tel évènement, de poser leurs questions  et de "liké" ou "disliké" les autres questions. 
+Ensuite l’administrateur (via le back office) pourra mettre en avant une question via un POP-UP et jouer sur le ranking des questions et ainsi pourra répondre aux questions les plus pertinentes.
+
 
 ##Dépendances :
 
