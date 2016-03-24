@@ -64,6 +64,22 @@ class QuestionController extends Controller {
     }
 
     /**
+     * Delete Question
+     * @param Question $question
+     */
+    public function deleteQuestionAction(Question $question) {
+        $em = $this->getDoctrine()->getManager();
+        
+        $data = array('id' => $question->getId());
+        $this->fayeClient("/deleteQuestion", $data);
+        
+        $em->remove($question);
+        $em->flush();
+        
+        return new JsonResponse("OK");
+    }
+
+     /**
      * Mettre à jour le nombre de likes des questions
      * @param Question $question
      * @return Response => nombre questions "Liker"

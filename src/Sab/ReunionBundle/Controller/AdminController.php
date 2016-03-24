@@ -9,6 +9,8 @@ use Sab\ReunionBundle\Entity\User;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Sab\ReunionBundle\Form\EventType;
+use Sab\ReunionBundle\Entity\Question;
+use Sab\ReunionBundle\Form\QuestionType;
 
 /**
  * Description of AdminController
@@ -265,7 +267,9 @@ class AdminController extends Controller {
                 'idEvent' => $event->getId(),
                 'idQuestion' => $q->getId(),
                 'statutFocus' => $q->getIsfocus(),
-                'fav' => '<a href="#"><span class="glyphicon glyphicon-star-empty icon_focus_' . $q->getId() . '"></span></a>'
+                'fav' => '<a href="#"><span class="glyphicon glyphicon-star-empty icon_focus_' . $q->getId() . '"></span></a>',
+                'delete' => '<a href="#"><span class="glyphicon glyphicon-trash icon_delete_' . $q->getId() . '" onClick="deleteQuestion(' . $q->getId() . ',' . $event->getId() . ')"></span></a>',
+                'modifier' => '<a href="#"><span class="glyphicon glyphicon-edit" title="Modifier" onClick="modifierQuestion(' . $q->getId() . ',' . $event->getId() .')"></span></a>'
             );
             $tabToJson[] = $tab;
         }
@@ -339,19 +343,56 @@ class AdminController extends Controller {
     }
 
     /**
-     * S'abonner au tunnel "/focusQuestion" à fin d'affiher la question répondu pour tous les clients 
-     * @param array $data
+     * Modify question
      */
-    public function subFayeClientFocusQuestion($data) {
-        $this->fayeClient("/focusQuestion", $data);
+    public function modificationQuestionAction(Question $question) {
+
+        $request = $this->getRequest();
+        if ($request->isXmlHttpRequest()) {
+            $em = $this->getDoctrine()->getManager();
+        }
+        return new Response($question->getContenu());
     }
 
     
     /**
-     * Récuperer les clients, ensuite envoyer les données au tunnel écouté !! 
-     * @param string $channel => "/focusQuestion"
-     * @param array $data
+     * save modification question
      */
+    public function saveModificationQuestionAction() {
+        $em = $this->getDoctrine()->getManager();
+        $request = $this->getRequest();
+        if ($request->isXmlHttpRequest()) {
+            $idQuestion = $request->request->get('idQuestion');
+            $contenu = $request->request->get('contenu');
+            $q = $em->getRepository("ReunionBundle:Question")->findById($idQuestion);
+            $q[0]->setContenu($contenu);
+            $em->flush();
+            
+            //appeler fayClient    
+            $data = array(
+                'datas' => array(
+                    'idQuestion' => $idQuestion,
+                    'contenu' => $contenu,
+            ));
+            $this->subFayeClientUpdateContentQuestion($data); 
+            
+        }
+        return new JsonResponse(
+                array(
+                    'statut' => 'ok'
+                )
+        );
+    }
+
+    //focus question
+    public function subFayeClientFocusQuestion($data) {
+        $this->fayeClient("/focusQuestion", $data);
+    }
+    
+    public function subFayeClientUpdateContentQuestion($data){
+        $this->fayeClient("/updateContentQuestion", $data);
+    }
+
     public function fayeClient($channel, $data) {
         $faye = $this->container->get('sab.reunion.faye.client');
         $faye->send($channel, $data);

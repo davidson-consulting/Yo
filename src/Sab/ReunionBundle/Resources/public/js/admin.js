@@ -251,7 +251,6 @@ function focusQuestion() {
                 console.log("");
             },
             error: function () {
-
             },
             complete: function () {
                 $('.table-question-admin').bootstrapTable('refresh',
@@ -259,8 +258,82 @@ function focusQuestion() {
                 );
             }
         });
-
-
     });
+}
 
+function deleteQuestion(id, idEvent) {
+    var confirmDelete = confirm("Voulez-vous vraiment supprimer cette question ?");
+    if (confirmDelete === true) {
+        $.ajax({
+            type: 'POST',
+            url: Routing.generate('_delete_question', {'id': id}),
+            success: function (res) {
+                console.log(res);
+            },
+            error: function () {
+                console.log("error");
+            },
+            complete: function () {
+                $('.table-question-admin').bootstrapTable('refresh',
+                        {url: Routing.generate('_load_question_json', {'id': idEvent})}
+                );
+            }
+        });
+    }
+}
+
+function modifierQuestion(question, idEvent) {
+
+    $.ajax({
+        type: 'POST',
+        url: Routing.generate('_modification_question', {'id': question}),
+        success: function (res) {
+            bootbox.dialog({
+                title: "Modifier la question",
+                message: "<div class='row'>" +
+                        "<div class='col-md-12'>" +
+                        "<textarea id='contenuQuestionModifier' rows='4' cols='80'>" +
+                        res +
+                        "</textarea>" +
+                        "</div>" +
+                        "</div>",
+                buttons: {
+                    success: {
+                        label: "Modifier",
+                        className: "btn-success",
+                        callback: function () {
+                            if ($('#contenuQuestionModifier').val() == "") {
+                                bootbox.alert("Le champs texte ne doit pas être vide");
+                            } else {
+                                //ajax
+                                $.ajax({
+                                    type: 'POST',
+                                    data: {'idQuestion': question, 'contenu': $('#contenuQuestionModifier').val()},
+                                    dataType: 'json',
+                                    url: Routing.generate('_save_modification_question'),
+                                    success: function (res) {
+                                        bootbox.alert("La modification de votre question a bien été prise en compte");
+                                    },
+                                    complete: function () {
+                                        $('.table-question-admin').bootstrapTable('refresh',
+                                                {url: Routing.generate('_load_question_json', {'id': idEvent})}
+                                        );
+                                    }
+                                });
+                            }
+                        }
+                    },
+                }
+            });
+
+        },
+        error: function () {
+            console.log("error");
+        },
+        complete: function () {
+            $('.table-question-admin').bootstrapTable('refresh',
+                    {url: Routing.generate('_load_question_json', {'id': idEvent})}
+            );
+        }
+    });
 }

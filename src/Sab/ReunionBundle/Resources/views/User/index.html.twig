@@ -92,7 +92,7 @@
                 <div class="list-question">
                     <div class="emptyQuestion" hidden="hidden"></div>
                     {% for q in questions %}
-                        <section class="question">
+                        <section class="question q_{{q.id}}">
                             <section class="blockLike">
                                 <div class="nbLike">
                                     <span class="nbLikeValue_{{q.id}}">{{q.nbLike}}</span>

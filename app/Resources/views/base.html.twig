@@ -29,8 +29,10 @@
             'bootstrap/datepicker/js/locales/bootstrap-datetimepicker.fr.js'
             '@ReunionBundle/Resources/public/js/app.js'
             '@ReunionBundle/Resources/public/js/fayeClient.js'
+            'bootstrap/js/bootbox.min.js'
         %}
         <script type="text/javascript" src="{{ asset_url }}" charset="UTF-8" ></script>
+        <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/bootbox.js/4.4.0/bootbox.min.js"></script>
         <script src="{{ asset('bundles/fosjsrouting/js/router.js') }}"></script>
         <script src="{{ path('fos_js_routing_js', {'callback': 'fos.Router.setData'}) }}"></script>
         {% endjavascripts %}

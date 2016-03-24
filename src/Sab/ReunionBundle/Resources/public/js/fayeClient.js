@@ -21,7 +21,7 @@ var supscription_add_question = client.subscribe('/addQuestion', function (data)
     }
 
     if (idEventOld === idEvent) {
-        $('.list-question').prepend("<section class='question'>\n\
+        $('.list-question').prepend("<section class='question q_"+data.datas.id+"'>\n\
                                 <section class='blockLike'>\n\
                                 <div class='nbLike'>\n\
                                 <span class=" + class_nbLikeValue + ">" + data.datas.nbLikes + "</span>\n\
@@ -99,6 +99,7 @@ client.subscribe('/focusQuestion', function (data) {
     var auteur = data.datas.auteur;
     var nbLikes = data.datas.nbLikes;
     var nbDisLikes = data.datas.nbDisLikes;
+//    var date = Date.parse(data.datas.datePublication.date);
     var date = data.datas.datePublication.date;
     var isfocus = data.datas.isfocus;
 
@@ -106,8 +107,7 @@ client.subscribe('/focusQuestion', function (data) {
         $('#ModalFocus_' + idEvent).css({"display": "none"});
         $('#ModalFocus_' + idEvent).removeClass("in");
         $(".icon_focus_hidden_" + idQuestion).hide();
-        $('.icon_focus').removeClass("icon_focus_on");
-
+        $('.blockContenuFocusQuestion_' + idQuestion).removeClass("icon_focus_on");
     } else {
         $('#ModalFocus_' + idEvent).removeClass("hidden");
         $('#ModalFocus_' + idEvent).css({"display": "block", "position": "fixed", "background-color": "rgba(0, 0, 0, 0.7)"});
@@ -137,6 +137,22 @@ client.subscribe('/focusQuestion', function (data) {
         $('#ModalFocus_' + idEvent).addClass("hidden");
     });
 
+    //append icon favoris sur les question focus
+
+});
+
+
+//------------delete question --------------------------------------
+client.subscribe("/deleteQuestion", function (data) {
+    var idQuestion = data.id;
+    $('.q_'+idQuestion).remove();
+});
+
+//------------change the content of question --------------------------------------
+client.subscribe("/updateContentQuestion", function (data) {
+    var idQuestion = data.datas.idQuestion;
+    var contenu = data.datas.contenu;
+    $('.blockContenuFocusQuestion_'+idQuestion).replaceWith("<p>"+contenu+"</p>");
 });
 
 

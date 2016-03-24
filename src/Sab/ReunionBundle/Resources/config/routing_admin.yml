@@ -63,3 +63,26 @@ _focus_question:
     defaults:   { _controller: ReunionBundle:Admin:focusQuestion }
     options:
         expose: true
+
+_delete_question:
+    path:       /deleteQuestion/{id}
+    defaults:   { _controller: ReunionBundle:Question:deleteQuestion }
+    requirements:
+        id:     \d+
+    options:
+        expose: true 
+        
+_modification_question:
+    path:       /modifierQuestion/{id}
+    defaults:   { _controller: ReunionBundle:Admin:modificationQuestion }
+    requirements:
+        id:     \d+
+    options:
+        expose: true
+        
+_save_modification_question:
+    path:       /saveModifierQuestion/
+    defaults:   { _controller: ReunionBundle:Admin:saveModificationQuestion }
+    options:
+        expose: true        
+     

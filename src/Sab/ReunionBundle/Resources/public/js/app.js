@@ -65,14 +65,27 @@ var updateDislike = function (val_this) {
         url: Routing.generate('_user_disliker_question', {'id': DataName}),
         success: function (result) {
             $(".nbDisLikeValue_" + DataName).html(result);
+            var date = new Date();
+            var month = date.getMonth() + 1;
+            function addZero(i) {
+                if (i < 10) {
+                    i = "0" + i;
+                }
+                return i;
+            }
             var objet = {
                 nameAction: "updateDisLike",
                 idEvent: IdEvent,
                 id_question: DataName,
-                nb_dislike: result
+                nb_dislike: result,
+                background_displike: '0px -64px',
+                background_like: '0px 0px',
+                date: date.getFullYear() + "-" + month + "-" + date.getDate() + " " + date.getHours() + ":" + date.getMinutes() + ":" + addZero(date.getSeconds())
             }
-            // write data in session storage
-            write_session_storage("update_dislike_", DataName, objet);
+            // write datat in session storage
+            
+            decrementeLesDislikes(DataName, result);
+            write_session_storage("update_like_", DataName, objet);
             decrementeLesDislikes(DataName, result);
         },
         error: function () {
@@ -99,13 +112,25 @@ var updateLike = function (val_this) {
         url: Routing.generate('_user_liker_question', {'id': DataName}),
         success: function (result) {
             $(".nbLikeValue_" + DataName).html(result);
+            var date = new Date();
+            var month = date.getMonth() + 1;
+            function addZero(i) {
+                if (i < 10) {
+                    i = "0" + i;
+                }
+                return i;
+            }
             var objet = {
                 nameAction: "updateLike",
                 idEvent: IdEvent,
                 id_question: DataName,
-                nb_like: result
+                nb_like: result,
+                background_like: '0px -64px',
+                background_displike: '0px 0px',
+                date: date.getFullYear() + "-" + month + "-" + date.getDate() + " " + date.getHours() + ":" + date.getMinutes() + ":" + addZero(date.getSeconds())
             }
             //write datat in session storage
+            decrementeLesLikes(DataName, result);
             write_session_storage("update_like_", DataName, objet);
             decrementeLesLikes(DataName, result);
         },
@@ -136,6 +161,9 @@ function limiterLike(id, name, nb, init) {
             var id_question = read_objet.id_question;
             var id_event = read_objet.idEvent;
             var nameAction = read_objet.nameAction;
+            var background_dis = read_objet.background_displike;
+            var background_like = read_objet.background_like;
+            var date_modif = read_objet.date;
 
             if (init && name == "init") {
                 if (nameAction === "updateLike") {
@@ -145,14 +173,14 @@ function limiterLike(id, name, nb, init) {
                     $(".likebutton[data-name=" + id_question + "]").css({
                         'background-position': '0px -64px'
                     });
-                } else {
-                    //changer l'image apres le dislike
+                }
+                //changer l'image apres le dislike
+                if (nameAction === "updateDisLike") {
                     $(".disLikebutton[data-name=" + id_question + "]").addClass("dislike-disabled");
                     $(".disLikebutton[data-name=" + id_question + "]").attr("onclick", "false");
                     $(".disLikebutton[data-name=" + id_question + "]").css({
                         'background-position': '0px -91px'
-                    }
-                    );
+                    });
                 }
             }
         }
@@ -190,14 +218,18 @@ function decrementeLesLikes(id, nb) {
             }
 
             if ((id == id_question)) {
-                $(".likebutton[data-name=" + id_question + "]").attr("onclick", "false");
-                $(".likebutton[data-name=" + id_question + "]").addClass("like-disabled");
+                //$(".likebutton[data-name=" + id_question + "]").attr("onclick", "false");
+                //$(".likebutton[data-name=" + id_question + "]").addClass("like-disabled");
                 //changer l'image apres le like
                 $(".likebutton[data-name=" + id_question + "]").css({
                     'background-position': '0px -64px'
                 }
                 );
-
+                //dislike
+                $(".disLikebutton[data-name=" + id_question + "]").css({
+                    'background-position': '0px -34px'
+                }
+                );
             }
         }
     }
@@ -218,6 +250,7 @@ function decrementeLesDislikes(id, nb) {
 
             //Tester si la question est "liké" alors on la dislike sinon on incrémente juste les dislikes
             if ((nameAction === "updateLike") && (id == id_question)) {
+                //requette ajax pour decremente les likes param : id_question, nb = nbr_de like;
                 $.ajax({
                     type: 'POST',
                     url: Routing.generate('_user_decremente_disliker_question', {'id': id_question}),
@@ -231,14 +264,18 @@ function decrementeLesDislikes(id, nb) {
             }
 
             if ((id == id_question)) {
-                $(".disLikebutton[data-name=" + id_question + "]").attr("onclick", "false");
-                $(".disLikebutton[data-name=" + id_question + "]").addClass("dislike-disabled");
+                //$(".disLikebutton[data-name=" + id_question + "]").attr("onclick", "false");
+                //$(".disLikebutton[data-name=" + id_question + "]").addClass("dislike-disabled");
 
                 //changer l'image apres le dislike
                 $(".disLikebutton[data-name=" + id_question + "]").css({
                     'background-position': '0px -91px'
                 }
                 );
+                //like
+                $(".likebutton[data-name=" + id_question + "]").css({
+                    'background-position': '0px 0px'
+                });
 
             }
         }
