@@ -9,7 +9,7 @@ use Doctrine\ORM\EntityRepository;
  * 
  */
 class QuestionRepository extends EntityRepository {
-    
+
     /**
      * Requête d'update du nombre de "likes" d'une question 
      * @param Question $idQuestion => id de la question
@@ -22,6 +22,7 @@ class QuestionRepository extends EntityRepository {
                 ->update("ReunionBundle:Question", "q")
                 ->set("q.nbLike", $nbLike)
                 ->where("q.id = :id")
+                ->andWhere("q.flagDeleted = false")
                 ->setParameter("id", $idQuestion)
                 ->getQuery();
         $ex = $qb->execute();
@@ -39,6 +40,7 @@ class QuestionRepository extends EntityRepository {
                 ->update("ReunionBundle:Question", "q")
                 ->set("q.nbDislike", $nbDisLike)
                 ->where("q.id = :id")
+                ->andWhere("q.flagDeleted = false")
                 ->setParameter("id", $idQuestion)
                 ->getQuery();
         $ex = $qb->execute();
@@ -56,6 +58,7 @@ class QuestionRepository extends EntityRepository {
                 ->select("count('q')")
                 ->from("ReunionBundle:Question", "q")
                 ->where("q.event = :id")
+                ->andWhere("q.flagDeleted = false")
                 ->setParameter("id", $idEvent);
 
         return $qb->getQuery()
@@ -72,6 +75,7 @@ class QuestionRepository extends EntityRepository {
                 ->select("q")
                 ->from("ReunionBundle:Question", "q")
                 ->where("q.event = :id")
+                ->andWhere("q.flagDeleted = false")
                 ->setParameter("id", $idEvent)
                 ->orderBy('q.datePublication', 'DESC');
 
@@ -91,6 +95,7 @@ class QuestionRepository extends EntityRepository {
                 ->update("ReunionBundle:Question", "q")
                 ->set("q.isfocus", $data)
                 ->where("q.id = :id")
+                ->andWhere("q.flagDeleted = false")
                 ->andWhere("q.event = :idEvent")
                 ->setParameter("id", $idQuestion)
                 ->setParameter("idEvent", $idEvent)

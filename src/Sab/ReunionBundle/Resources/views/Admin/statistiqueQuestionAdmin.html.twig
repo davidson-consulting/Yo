@@ -1,0 +1,14 @@
+{% extends "ReunionBundle:Admin:index.html.twig" %}
+{% set idevent = event.getId() %}
+{% set labelEvent = event.getLabelEvent() %}
+{% block title_page %}
+    <li class="list-question-admin">
+        <a href="{{path('_event_detail',{'id':idevent})}}">{{labelEvent}}</a> <span class="next-button"> > </span><span class="glyphicon glyphicon-stats icon-list-question-admin"></span><span>Statistique</span>
+    </li>   
+{% endblock %}
+{%block event_list_question %}
+        <div class="container" id="stats" data-event="{{idevent}}">
+            <canvas id="myChart" width="600" height="600"></canvas>
+        </div>
+{% endblock %}
+

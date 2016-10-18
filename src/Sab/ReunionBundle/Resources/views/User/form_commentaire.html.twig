@@ -1,0 +1,16 @@
+<form action="{{ path('_user_ajouter_commentaire', {'question_id':question_id,'parentCommentId':parentCommentId}) }}" method="post"{{ form_enctype(form) }} >
+    <div class="form-contenu-commentaire">
+        {{ form_widget(form.texte, {'attr':{'class':'form-control-commentaire'}}) }}
+    </div>
+    <div class="form-auteur-commentaire">
+        <label class="form-name-auteur-commentaire">
+            <span>Votre nom:</span>
+            <span>facultatif</span>
+        </label>
+        <div class="form-input-auetur-commentaire">    
+            {{ form_widget(form.auteur, {'attr':{'class':'form-auteur-input-commentaire'}})  }}
+            {{ form_errors(form.auteur) }}
+        </div>
+        {{ form_rest(form) }}
+    </div>      
+</form>

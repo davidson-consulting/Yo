@@ -24,8 +24,8 @@ class Question
     
     
     /**
-     * 
-     * @ORM\ManyToOne(targetEntity="Sab\ReunionBundle\Entity\Event", cascade={"remove"})
+     *
+     * @ORM\ManyToOne(targetEntity="Sab\ReunionBundle\Entity\Event")
      */
     protected $event;
     
@@ -38,6 +38,13 @@ class Question
      */
     protected $contenu;
 
+
+    /**
+     *
+     *@ORM\OneToMany(targetEntity="Sab\ReunionBundle\Entity\Commentaire", mappedBy="question", cascade={"persist","remove"})
+     *
+     */
+    protected $commentaire;
    
     /**
      * Auteur de la question  
@@ -65,7 +72,6 @@ class Question
      */
     protected $nbDislike;
     
-    
     /**
      * Date de publication de la question
      * @var string
@@ -81,6 +87,13 @@ class Question
      */
     protected $isfocus;
 
+    /**
+     *@var string
+     *@ORM\Column(name="flagDeleted", type="boolean", options={"default":false})
+     *
+     *
+     */
+    protected $flagDeleted;
 
     
     public function __construct() {
@@ -259,4 +272,94 @@ class Question
         return $this->isfocus = $focus;
     }
     
+
+    /**
+     * Add commentraire
+     *
+     * @param \Sab\ReunionBundle\Entity\Commentaire $commentraire
+     * @return Question
+     */
+    public function addCommentraire(\Sab\ReunionBundle\Entity\Commentaire $commentraire)
+    {
+        $this->commentraire[] = $commentraire;
+
+        return $this;
+    }
+
+    /**
+     * Remove commentraire
+     *
+     * @param \Sab\ReunionBundle\Entity\Commentaire $commentraire
+     */
+    public function removeCommentraire(\Sab\ReunionBundle\Entity\Commentaire $commentraire)
+    {
+        $this->commentraire->removeElement($commentraire);
+    }
+
+    /**
+     * Get commentraire
+     *
+     * @return \Doctrine\Common\Collections\Collection 
+     */
+    public function getCommentraire()
+    {
+        return $this->commentraire;
+    }
+
+    /**
+     * Add commentaire
+     *
+     * @param \Sab\ReunionBundle\Entity\Commentaire $commentaire
+     * @return Question
+     */
+    public function addCommentaire(\Sab\ReunionBundle\Entity\Commentaire $commentaire)
+    {
+        $this->commentaire[] = $commentaire;
+
+        return $this;
+    }
+
+    /**
+     * Remove commentaire
+     *
+     * @param \Sab\ReunionBundle\Entity\Commentaire $commentaire
+     */
+    public function removeCommentaire(\Sab\ReunionBundle\Entity\Commentaire $commentaire)
+    {
+        $this->commentaire->removeElement($commentaire);
+    }
+
+    /**
+     * Get commentaire
+     *
+     * @return \Doctrine\Common\Collections\Collection 
+     */
+    public function getCommentaire()
+    {
+        return $this->commentaire;
+    }
+
+    /**
+     * Set flagDeleted
+     *
+     * @param string $flagDeleted
+     * @return Question
+     */
+    public function setFlagDeleted($flagDeleted)
+    {
+        $this->flagDeleted = $flagDeleted;
+
+        return $this;
+    }
+
+    /**
+     * Get flagDeleted
+     *
+     * @return string 
+     */
+    public function getFlagDeleted()
+    {
+        return $this->flagDeleted;
+    }
+
 }

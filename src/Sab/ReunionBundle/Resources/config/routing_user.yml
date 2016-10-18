@@ -9,7 +9,7 @@ _user_liker_question:
         id:         \d+
     options:
         expose: true
-        
+
 _user_disliker_question:
     path:       /updateDisLike/{id}
     defaults:   { _controller: ReunionBundle:Question:updateDisLike }
@@ -31,5 +31,14 @@ _user_decremente_disliker_question:
     defaults:   { _controller: ReunionBundle:Question:decrementeDislike }
     requirements:
         id:         \d+
+    options:
+        expose: true
+
+_user_ajouter_commentaire:
+    path:   /{question_id}/{parentCommentId}/ajoutercommentaire
+    defaults: { _controller: ReunionBundle:Commentaire:addCommentaire }
+    requirements:
+        id:         \d+
+        parentCommentId:         \d+
     options:
         expose: true

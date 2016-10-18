@@ -5,52 +5,64 @@
 {% set pathBanner = event.getTheme().getPathFileProfil(idevent) %}
 {% set pathBackground = event.getTheme().getPathFileBackground(idevent) %}
 
-
 {% block body %}
     <div class="body-app" style="background-image: url('{{asset(pathBackground)}}')">
-        <div class="container nameApplication">
-             <img src="{{asset('bundles/reunion/images/logoyo.png')}}" alt="YO!"/>
-        </div>
-
-
-        <div class="container banner" style="background-image: url('{{asset(pathBanner)}}')">
-            <span class="nameEvent">{{event.labelEvent}}</span>
-        </div>
-        <div class="container dashBoardBody">
-
-            <div class="logo">
-                <img src="{{asset(pathLogo)}}" alt="logo-davidson" class="img-circle" />
-            </div>
-
-            {% for message_notice in app.session.flashbag.get('notice') %}
-                <div class="msgInfo">
-                    <div class="alertInfo alert  alert-success alert-dismissible" role="alert">
-                        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                            <span aria-hidden="true">&times;</span>
-                        </button>
-                        <span class="glyphicon glyphicon-ok" aria-hidden="true"></span><span class="msg-info-show">{{message_notice}}</span>
-                    </div>
+        <div class="container nameApplication "  >
+            <div class="row" >
+                <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                     <img src="{{asset('bundles/reunion/images/logoyo.png')}}" alt="YO!"/>
                 </div>
-            {%endfor %}
+            </div>
+        </div>
 
-            <nav class="menu">
-                <span class="glyphicon glyphicon-menu-hamburger"></span>
-            </nav>
-            <div class="infoEvent">
+
+        <div class="container banner header-wrapMobile" style="background-image: url('{{asset(pathBanner)}}')">
+
+            <div class="row rowEvent headerMobile" >
+                <div class="labelEvent col-xs-6 col-xs-offset-6 col-sm-5 col-sm-offset-7 col-md-4 col-md-offset-8 col-lg-4 col-lg-offset-8 ">
+                    <span class="nameEvent pull-right" style="margin:0">{{event.labelEvent}}</span>
+                </div>
+            </div>
+        </div>
+        <div class="container dashBoardBody ">
+            <div class="row logo header-wrap header-wrapMobile">
+                <div class="bouttonMenu col-xs-1 visible-xs header headerMobile" >
+                    <button class="btnShowMenu visible-xs" onclick="diffDateTimeEventMobile()" type="button" data-toggle="collapse" data-target="#menuMobile" aria-expanded="false" aria-controls="menuMobile">
+                        <span  class="glyphicon glyphicon-menu-hamburger" style="color:#01948E;font-size:1.2em"></span>
+                    </button>
+                </div>
+                <div class="col-xs-3 col-xs-offset-3 col-sm-4 col-sm-offset-1 col-md-3 header">
+                    <img src="{{asset(pathLogo)}}" alt="logo-davidson" class="img-circle" />
+                </div>
+                 
+
+                {% for message_notice in app.session.flashbag.get('notice') %}
+                    <div class="msgInfo">
+                        <div class="alertInfo alert  alert-success alert-dismissible" role="alert">
+                            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                            <span class="glyphicon glyphicon-ok" aria-hidden="true"></span><span class="msg-info-show">{{message_notice}}</span>
+                        </div>
+                    </div>
+                {%endfor %}
+            </div>
+            
+            <div id="menuMobile" class="infoEvent col-xs-12 collapse hidden-sm hidden-md hidden-lg">
                 <div class="decompte">
-                    <span class="glyphicon glyphicon-time" aria-hidden="true"></span>
+                    <span class="glyphicon glyphicon-time" aria-hidden="true" style="color:#01948E"></span>
                     <span>Nombre de jours avant l'événement :</span>
                     <div class="info-decompte">
-                        <div id="days" class="info-event"></div>
-                        <div id="hour"></div>
-                        <div id="minute"></div>
+                        <div id="daysMobile" class="info-event"></div>
+                        <div id="hourMobile"></div>
+                        <div id="minuteMobile"></div>
                     </div>
-                    {#                 <div id="seconds"></div>#}
-                    <div id="fin"></div>
+                    {#                 <div id="secondsMobile"></div>#}
+                    <div id="finMobile"></div>
                 </div>
                 <div class="nb-question-posee">
                     {% for q, key in countQuestion %}
-                        <span class="glyphicon glyphicon-check" aria-hidden="true"></span>
+                        <span class="glyphicon glyphicon-check" aria-hidden="true" style="color:#01948E"></span>
                         <span>Nombre de questions posées :</span> 
                         <div class="info-event count_{{event.id}}">
                             {% if key == 0 or key == 1 %}
@@ -64,7 +76,7 @@
                 <span hidden="hidden" class="dateDebutEvent">{{dateDebutEvent | date('M d, Y H:i:s', "Europe/Paris")}}</span>
 
                 <div class="deconnexion">
-                    <span class="glyphicon glyphicon-off" aria-hidden="true"></span>
+                    <span class="glyphicon glyphicon-off" aria-hidden="true" style="color:#01948E"></span>
                     <span>
                         {% if is_granted("IS_AUTHENTICATED_REMEMBERED") %}
                             <a href="{{ path('fos_user_security_logout') }}">
@@ -77,14 +89,65 @@
                 </div>
             </div>
 
-            <div id="containerQuestion"> 
-                <h2 id="show_question_title">Questions :
-                    <span class="addQuestionMobile label label-info">
-                        <span class="glyphicon glyphicon-plus"></span>
+            <div class="row rowContent" >
+            <div class="infoEvent col-sm-4 col-md-3 hidden-xs">
+            <div class="infoEventDiv">
+            <div class="row" >
+                    <div class="col-xs-12 col-sm-10 col-sm-offset-1 col-md-10 col-lg-10  addQuestion buttonAddQuestion hidden-xs" value="Nouvelle question" >
+                        <span class="col-centered" style="padding-top:12px;"><span class="icon-add-question" ></span>    &nbsp; Nouvelle question</span>
+                    </div> 
+                </div>
+                <br>
+                <div class="decompte">
+                    <span class="glyphicon glyphicon-time" aria-hidden="true" style="color:#01948E"></span>
+                    <span>Nombre de jours avant l'événement :</span>
+                    <div class="info-decompte">
+                        <div id="days" class="info-event"></div>
+                        <div id="hour"></div>
+                        <div id="minute"></div>
+                    </div>
+                    {#                 <div id="seconds"></div>#}
+                    <div id="fin"></div>
+                </div>
+                <div class="nb-question-posee">
+                    {% for q, key in countQuestion %}
+                        <span class="glyphicon glyphicon-check" aria-hidden="true" style="color:#01948E"></span>
+                        <span>Nombre de questions posées :</span> 
+                        <div class="info-event count_{{event.id}}">
+                            {% if key == 0 or key == 1 %}
+                                {{key}} Question
+                            {% else %}
+                                {{key}} Questions
+                            {% endif %}    
+                        </div>
+                    {% endfor %}
+                </div>
+                <span hidden="hidden" class="dateDebutEvent">{{dateDebutEvent | date('M d, Y H:i:s', "Europe/Paris")}}</span>
+
+                <div class="deconnexion">
+                    <span class="glyphicon glyphicon-off" aria-hidden="true" style="color:#01948E"></span>
+                    <span>
+                        {% if is_granted("IS_AUTHENTICATED_REMEMBERED") %}
+                            <a href="{{ path('fos_user_security_logout') }}">
+                                {{ 'layout.logout'|trans({}, 'FOSUserBundle') }}
+                            </a>
+                        {% else %}
+                            <a href="{{ path('fos_user_security_logout') }}">{{ 'layout.login'|trans({}, 'FOSUserBundle') }}</a>
+                        {% endif %}
+                    </span>
+                </div>
+                </div>
+            </div>
+            {% block commentaire_question %}
+            <div class="containerQuestion col-xs-12 col-sm-8 col-md-9" > 
+                <h2 id="show_question_title">
+                <span id="title_question">Questions :</span>
+                    <span class="addQuestionMobile label label-info-color visible-xs">
+                        <span class="glyphicon glyphicon-plus" ></span>
                         {#<span class="addQuestion buttonAddQuestion" data-toggle="modal" data-target="#ModalAddQuestion">
                             Nouvelle question
                         </span>#}
-                        <span class="addQuestion buttonAddQuestion">
+                        <span class="buttonAddQuestionMobile">
                             Nouvelle question
                         </span>
                     </span>
@@ -118,28 +181,133 @@
                                 {% endif %}
 
                                 <div class="contenuQuestion text-left blockContenuFocusQuestion_{{q.id}}">
-                                    <p>{{q.contenu}}</p>
+                                    <p class="parag">{{q.contenu}}</p>
                                 </div>
+                                <div style="float:left;width:90%">
                                 <section class="auteur">
+                                
                                     posté par :
                                     {% if q.auteur is not null %}
-                                        <span>{{q.auteur}} - </span>
+                                        <span style="word-wrap:break-word;">{{q.auteur}} - </span>
                                     {% else %}
                                         <span>Anonyme - </span>
-                                    {% endif %}
+                                    {% endif %} 
                                     <span class="dataPublication">{{ q.datePublication.date | date('d/m/Y à H:i:s') }}</span>
-                                </section>        
+                                
+                                </section> 
+                                </div>            
                             </section>
                         </section>
+                        <div class="commentaire_container">
+                            <div class="header_commentaire q_{{ q.id }}">
+                                {% set nbre_comment = commentairesRepository.countCommentaireForQuestionLevel1(q.id) %}
+                                <span class="glyphicon glyphicon-comment buttonAddCommentaire"><button type="button" class ="button_plus" data-level="1" onclick="addCommentInModal({{ q.id }},0);">Commenter      |</button></span><span class="nbre_commentaire nbre_commentaire_{{q.id}}">({{ nbre_comment[1] }})<button type="button" class="buttonListCommentaire" data-toggle="modal" data-target="#listCommentaire_{{q.id}}">Commentaire(s)</button></span>
+                            </div>
+                            <div class="commentaire" id="comment_{{ q.id }}">
+                                {% if  nbre_comment[1] == 0 %}
+                                <section class="blockContenuCommentaire blockContenuCommentaire_{{q.id}}" style="display:none;">
+                                {% else %}
+                                {% set commentaires = commentairesRepository.getlastCommentaireLevel1(q.id) %}
+                                <section class="blockContenuCommentaire blockContenuCommentaire_{{q.id}}">
+                                {% for c in commentaires %}
+                                    <div class="contenuCommentaire blockContenuFocusCommentaire_{{c.id}}">
+                                        <p style="word-wrap:break-word;">{{ c.texte }}</p>
+                                        <section class="c_auteur">
+                                            posté par :
+                                            {% if c.auteur is not null %}
+                                            <span style="word-wrap:break-word;">{{ c.auteur }}</span>
+                                            {% else %}
+                                            <span>Anonyme </span>
+                                            {% endif %}
+                                            <span class="c_datePublication"> - {{ c.datePublication.date | date('d/m/Y à H:i:s') }}</span>
+                                        </section>
+                                    </div>
+                                {% endfor %}
+                                {% endif %}
+                                </section>
+                            </div>
+                        </div> 
+
+                            {#  modal form commentaire #}
+                        <div class="modal fade form_commentaire " data-backdrop="true" tabindex="-1" role="dialog" id="form_commentaire_{{q.id}}" >
+                            <div class="modal-dialog">
+                                <div class="modal-content formAddCommentaire">
+                                    <div class="modal-header modal-header-form">
+                                        <button type="button" class="close close-mobile" onclick="addCommentInModal({{ q.id }},0)">&times;</button>
+                                        <h4 class="modal-title">Commentaire: </h4>
+                                    </div>
+                                    <div class="modal-body modal-body-form">
+                                        {{ render(controller('ReunionBundle:Commentaire:addCommentaire', {'question_id':q.id,'parentCommentId':5} )) }}
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+
+                             {#      modal commentaire #}
+                        {% set all_commentaires = commentairesRepository.triCommentaireLevel1(q.id) %}
+                        <div class="modal fade"  role="dialog"  id="listCommentaire_{{q.id}}" >
+                            <div class="modal-dialog modal-lg">
+                                <div class="modal-content liste_commentaire">
+                                    <div class="modal-header commentaire_title">
+                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>    
+                                        <h4 style="font-weight:bold;color:#01948E">Commentaire(s):</h4>
+                                    </div>
+                                    <div class="modal-body-commentaire commentaireForQuestion_{{q.id}}">
+                                        {% for c in all_commentaires %}
+                                        {% set all_commentairesSecondLevel = commentairesRepository.triCommentaireLevel2(q.id,c.id) %}
+
+                                        <div class="modal_contenuCommentaire blockContenuFocusCommentaire_{{c.id}} ">
+                                            <p style="word-wrap:break-word;">{{ c.texte }}</p>
+                                            <div class="commentairelvl1_{{c.id}}">
+                                            <p class="commentCommentaire">
+                                                <span class="commentComment" data-dismiss="modal" onclick="addCommentInModal({{ q.id }},{{c.id}})">Répondre à ce commentaire</span>
+                                            </p>
+                                            <p class="c_auteur">
+                                                {% if c.auteur is not null %}
+                                                <span style="word-wrap:break-word;">{{ c.auteur }}</span>
+                                                {% else %}
+                                                <span>Anonyme </span>
+                                                {% endif %}
+                                                <span class="c_datePublication"> - {{ c.datePublication.date | date('d/m/Y à H:i:s') }}</span>
+                                            </p>
+                                            </div>
+                                            <div style="clear: both;"></div>
+                                            <div class="commentairelevel2">
+                                                {% for c_level2 in all_commentairesSecondLevel %}
+                                                <div class="commentLevel2 row" style="margin:0">
+                                                    <p style="word-wrap:break-word;">{{ c_level2.texte }}</p>
+                                                    <section class="c_auteurLevel2">
+                                                        {% if c_level2.auteur is not null %}
+                                                        <span style="word-wrap:break-word;">{{ c_level2.auteur }}</span>
+                                                        {% else %}
+                                                        <span>Anonyme </span>
+                                                        {% endif %}
+                                                        <span class="c_datePublication"> - {{ c_level2.datePublication.date | date('d/m/Y à H:i:s') }}</span>
+                                                    </section>
+                                                </div>
+                                                {% endfor %}
+                                            </div>
+                                        </div>
+                                        {% endfor %}
+                                    </div>
+                                    <br>
+                                    <div class="row">
+                                        <div class="col-md-4 col-md-offset-7 col-xs-12">
+                                            <button type="button" class="btnAddComment col-xs-12" data-dismiss="modal"  data-toggle="modal" onclick="addCommentInModal({{ q.id }},0)">Ajouter un commentaire</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
                     {% endfor %}
                 </div>
 
-
-                <div class="addQuestion buttonAddQuestion" value="Nouvelle question">
-                    <div class="icon-add-question"></div>
-                    <span class="new-question-label">Nouvelle question</span>
-                </div> 
-
+                <div id='loadingmessage' style='display:none'>
+                        <img class="imgLoading " src="{{ asset('bundles/reunion/images/default.gif') }}"/>
+                </div>
+                
+                
 
                 {#  question focus#}
                 <div class="focus_question_{{idevent}}"></div>
@@ -153,7 +321,7 @@
                             <div class="modal-header modal-header-form">
                                 <h4 class="modal-title-focus">Question Focus !!!</h4>
                                 <span class="icon_focus">
-                                    <img src="{{asset("bundles/reunion/images/favorite.png")}}" alt="favoris" />
+                                    <img src="{{asset('bundles/reunion/images/favorite.png')}}" alt="favoris" />
                                     <button type="button" class="close_focus" data-dismiss="modal">&times;</button>
                                 </span>
                             </div>
@@ -177,7 +345,7 @@
 
                                     <section class="blockContenuQuestion">
                                         <div class="contenuQuestion contenuQuestionFocus text-left">
-                                            <p></p>
+                                            <p style="word-wrap:break-word;"></p>
                                         </div>
                                         <section class="auteur">
                                             posté par :
@@ -193,10 +361,10 @@
                         </div>
                     </div>
                 </div>
-
+                <!-- Button trigger modal -->
 
                 {#            modal content    #}
-                <div class="modal fade" id="ModalAddQuestion" role="dialog">
+                <div class="modal fade" id="ModalAddQuestion"  role="dialog">
                     <div class="modal-dialog">
                         <div class="modal-content formAddQuestion">
                             <div class="modal-header modal-header-form">
@@ -226,6 +394,9 @@
                     </div>
                 </div>
             </div> 
+            {% endblock %}
+        </div>
         </div>
     </div>
+
 {% endblock %}    

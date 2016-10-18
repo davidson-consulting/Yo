@@ -5,18 +5,11 @@ $(function () {
     var h = $('.dashBoardBody').height();
     var body_h = $('.body-app').height();
     var body_w = $('.body-app').width();
+    
+    if (body_h <=640 || body_w <= 570) {
 
-    if (h > 620) {
-        $('#containerQuestion').height(h - 480);
-    }
-    if (body_w === 1024) {
-        $('#containerQuestion').height(h - 480);
-    }
-    if (body_w <= 480) {
-        $('.list-question').height(body_h - 260);
-    }
-    if (body_w <= 320) {
-        $('.list-question').height(body_h - 100);
+            calcDist();
+
     }
 
     //Tester si la list-question est vide (empty)
@@ -35,7 +28,7 @@ $(function () {
 
     $('.likebutton').on('click', updateLike);
     $('.disLikebutton').on('click', updateDislike);
-    $('.menu').on('click', menu);
+    // $('.menu').on('click', menu);
 
 
     $('.addQuestion').on('click', ouvrirPopUp);
@@ -49,13 +42,155 @@ $(function () {
         }
     });
 
+
+$(window).scroll(function(){
+      if ($(this).scrollTop() > 300) {
+          $('.infoEventDiv').addClass('fixed');
+      } else {
+          $('.infoEventDiv').removeClass('fixed');
+      }
+  });
+
+
+  diffDateTimeEvent();  
+
+if (body_w <= 320){
+  var previousScroll = 0,
+    headerOrgOffset = $('.header').height();
+    containerQuestion = $('.containerQuestion').height();
+    list_question = $('.list-question').height();
+
+// $('.header-wrap').height($('.header').height());
+
+$(".list-question").scroll(function () {
+    var currentScroll = $(this).scrollTop();
+    if (currentScroll > headerOrgOffset) {
+        if (currentScroll > previousScroll) {
+            $('.header-wrap').slideUp();
+            $('#show_question_title').css('margin-top', '30px');
+            $('.list-question').height(body_h*110/100);
+            $('.containerQuestion').height(body_h*110/100);
+            $( "#menuMobile" ).removeClass( "in" );
+        } else {
+            $('.header-wrap').slideDown();
+            $('#show_question_title').css('margin-top', '0px');
+             $('.list-question').height(list_question);
+             $('.containerQuestion').height(containerQuestion);
+        }
+    } 
+    previousScroll = currentScroll;
 });
 
-// Mettre le nombre de "dislike" d'une question à jours
+}
+
+if (body_w <= 480 && body_w > 320){
+  var previousScroll = 0,
+    headerOrgOffset = $('.headerMobile').height();
+    containerQuestion = $('.containerQuestion').height();
+    list_question = $('.list-question').height();
+
+// $('.header-wrapMobile').height($('.headerMobile').height());
+
+$(".list-question").scroll(function () {
+    var currentScroll = $(this).scrollTop();
+    if (currentScroll > headerOrgOffset) {
+        if (currentScroll > previousScroll) {
+            $('.header-wrapMobile').slideUp();
+            $('#show_question_title').css('margin-top', '30px');
+            $('.list-question').height(body_h*80/100);
+            $('.containerQuestion').height(body_h*80/100);
+            $( "#menuMobile" ).removeClass( "in" );
+
+
+        } else {
+            $('.header-wrapMobile').slideDown();
+            $('#show_question_title').css('margin-top', '0px');
+             $('.list-question').height(list_question);
+             $('.containerQuestion').height(containerQuestion);
+
+        }
+    } 
+    previousScroll = currentScroll;
+});
+}
+});
+
+function calcDist(){
+    console.log("calcul de distance");
+    var h = $('.dashBoardBody').height();
+    var body_h = $('.body-app').height();
+    var body_w = $('.body-app').width();
+    console.log("h="+h);
+    console.log("body_h="+body_h);
+    console.log("body_w="+body_w);
+    if (h > 620 && h<=799) {
+        h1 = h*50/100;
+        console.log("cas20");
+        $('.containerQuestion').height(h1);
+        $('.list-question').height(h1);
+        $('.modal-body-commentaire').css('max-height', '600px');
+    }
+    else if (h > 799 && h <=900) {
+        h1 = h*40/100;
+        console.log("cas21");
+        $('.containerQuestion').height(h1);
+        $('.modal-body-commentaire').css('max-height', '600px');
+    }else if (h > 900) {
+        h1 = h*45/100;
+        console.log("cas22");
+        $('.containerQuestion').height(h1);
+        $('.modal-body-commentaire').css('max-height', '600px');
+    }
+
+    // if (body_w === 1024) {
+    //     console.log("cas3");
+    //     $('.containerQuestion').height(h - 480);
+    // }
+    // else if ((body_w <= 480) && (body_w > 320)) {
+    //     body_h1 = body_h*60/100;
+    //     console.log("cas4");
+    //     $('.list-question').height(body_h1);
+    //     $('.modal-body-commentaire').css('max-height', '500px');
+    // }
+    // else if (body_w <= 320) {
+    //     console.log("cas5");
+    //     $('.list-question').height(body_h - 160);
+
+    //     $('.modal-body-commentaire').css('max-height', '400px');
+    // }
+}
+
+
+function addCommentInModal(idQuestion,parentCommentId){
+   
+     $('#loadingmessage').show();
+    $.ajax({
+        type: "POST",
+        url: Routing.generate('_user_ajouter_commentaire', {'question_id' : idQuestion,'parentCommentId' :parentCommentId}),
+        success: function (result) {
+
+            // console.log("resulat ajax : " +result);
+            $("#form_commentaire_"+idQuestion +" .modal-body-form").html(result);
+
+        },
+        error: function () {
+            console.log("error");
+        },
+        complete: function () {
+             $('#loadingmessage').hide();
+            show_hide_form(this,idQuestion);
+//            val_this.attr("disabled","false");
+        }
+    });
+
+}
+
+
 var updateDislike = function (val_this) {
 
-    var DataName = val_this.getAttribute('data-name');
-    var IdEvent = val_this.getAttribute('data-event');
+    var DataName = $(val_this).attr('data-name');
+    console.log(DataName);  
+    var IdEvent = $(val_this).attr('data-event');
 
     $(".disLikebutton[data-name=" + DataName + "]").attr("onclick", "false");
     $(".disLikebutton[data-name=" + DataName + "]").addClass("dislike-disabled");
@@ -101,8 +236,8 @@ var updateDislike = function (val_this) {
 // Mettre le nombre de "like" d'une question à jour
 var updateLike = function (val_this) {
 
-    var DataName = val_this.getAttribute('data-name');
-    var IdEvent = val_this.getAttribute('data-event');
+    var DataName = $(val_this).attr('data-name');
+    var IdEvent = $(val_this).attr('data-event');
 
     $(".likebutton[data-name=" + DataName + "]").attr("onclick", "false");
     $(".likebutton[data-name=" + DataName + "]").addClass("like-disabled");
@@ -171,7 +306,7 @@ function limiterLike(id, name, nb, init) {
                     $(".likebutton[data-name=" + id_question + "]").addClass("like-disabled");
                     $(".likebutton[data-name=" + id_question + "]").attr("onclick", "false");
                     $(".likebutton[data-name=" + id_question + "]").css({
-                        'background-position': '0px -64px'
+                        'background-position': '0px -60px'
                     });
                 }
                 //changer l'image apres le dislike
@@ -179,7 +314,7 @@ function limiterLike(id, name, nb, init) {
                     $(".disLikebutton[data-name=" + id_question + "]").addClass("dislike-disabled");
                     $(".disLikebutton[data-name=" + id_question + "]").attr("onclick", "false");
                     $(".disLikebutton[data-name=" + id_question + "]").css({
-                        'background-position': '0px -91px'
+                        'background-position': '0px -94px'
                     });
                 }
             }
@@ -222,7 +357,7 @@ function decrementeLesLikes(id, nb) {
                 //$(".likebutton[data-name=" + id_question + "]").addClass("like-disabled");
                 //changer l'image apres le like
                 $(".likebutton[data-name=" + id_question + "]").css({
-                    'background-position': '0px -64px'
+                    'background-position': '0px -60px'
                 }
                 );
                 //dislike
@@ -269,7 +404,7 @@ function decrementeLesDislikes(id, nb) {
 
                 //changer l'image apres le dislike
                 $(".disLikebutton[data-name=" + id_question + "]").css({
-                    'background-position': '0px -91px'
+                    'background-position': '0px -94px'
                 }
                 );
                 //like
@@ -282,29 +417,53 @@ function decrementeLesDislikes(id, nb) {
     }
 }
 
-//------------------------------------menu responsive------------------------------------------------------------
+var comment =function(){
 
-var menu = function () {
-    if (cpt % 2 != 0) {
-        $('.infoEvent').show();
-        $('.menu span').removeClass('glyphicon-menu-hamburger');
-        $('.menu span').addClass('glyphicon-remove');
-
-        $('#containerQuestion').css("margin-top", "-7px");
-
-    } else {
-        var body_w = $('.body-app').width();
-        $('.infoEvent').hide();
-        $('.menu span').addClass('glyphicon-menu-hamburger');
-        $('.menu span').removeClass('glyphicon-remove');
-        if (body_w <= 320) {
-            $('#containerQuestion').css("margin-top", "-12px");
-        } else {
-            $('#containerQuestion').css("margin-top", "-56px");
-        }
-    }
-    cpt++;
+    
 }
+
+//---------------------------------------- ReadFile PDF ----------------------------------------------------------
+
+//function readFile() {
+//
+//    if (cpt % 2 != 0) {
+//        $('#displayDoc').show();
+//        $('.etat').html("Arrêter la présentation");
+//        $('.block-read-presentation span.glyphicon').removeClass('glyphicon-play');
+//        $('.block-read-presentation span.glyphicon').addClass('glyphicon-stop');
+//    } else {
+//        $('#displayDoc').hide();
+//        $('.etat').html("Lire la présentation");
+//        $('.block-read-presentation span.glyphicon').removeClass('glyphicon-stop');
+//        $('.block-read-presentation span.glyphicon').addClass('glyphicon-play');
+//    }
+//    cpt++;
+//}
+
+
+
+//------------------------------------menu resposive------------------------------------------------------------
+// var menu = function () {
+//     if (cpt % 2 != 0) {
+//         $('.infoEvent').show();
+//         $('.menu span').removeClass('glyphicon-menu-hamburger');
+//         $('.menu span').addClass('glyphicon-remove');
+
+//         $('.containerQuestion').attr('style', 'margin-top: -7px !important');
+
+//     } else {
+//         var body_w = $('.body-app').width();
+//         $('.infoEvent').hide();
+//         $('.menu span').addClass('glyphicon-menu-hamburger');
+//         $('.menu span').removeClass('glyphicon-remove');
+//         if (body_w <= 320) {
+//             $('.containerQuestion').attr('style', 'margin-top: -12px !important');
+//         } else {
+//             $('.containerQuestion').attr('style', 'margin-top: -56px !important');
+//         }
+//     }
+//     cpt++;
+// }
 
 var ouvrirPopUp = function () {
     $('#ModalAddQuestion').css({'top': '85px', 'opacity': '1', 'overflow': 'inherit', 'display': 'inline'});
@@ -317,7 +476,9 @@ var closePopUp = function () {
 
 //----------------------------------------le décompte avant le début de l'événement-----------------------------------
 
-diffDateTimeEvent();
+
+// $(".btnMenu").on('click',diffDateTimeEventMobile);
+
 
 function diffDateTimeEvent() {
 
@@ -334,28 +495,34 @@ function diffDateTimeEvent() {
     var d = Math.floor(s / 86400);
     if (d >= 0) {
         if (d > 1) {
-            days.html("<strong>" + d + " jours </strong>");
+            days.html("<strong color='#F7491D'>" + d + " jours </strong>");
         } else {
-            days.html("<strong>" + d + " jour </strong>");
+            days.html("<strong color='#F7491D'>" + d + " jour </strong>");
         }
         s -= d * 86400;
 
         var h = Math.floor(s / 3600);
         if (h > 1) {
-            hour.html("<string>" + h + " heures </strong>");
+            hour.html("<strong color='#F7491D'>" + h + " heures </strong>");
         } else {
-            hour.html("<string>" + h + " heure </strong>");
+            hour.html("<strong color='#F7491D'>" + h + " heure </strong>");
         }
         s -= h * 3600;
 
         var m = Math.floor(s / 60);
         if (m > 1) {
-            minute.html("<string>" + m + " minutes</strong>");
+            minute.html("<strong color='#F7491D'>" + m + " minutes</strong>");
         } else {
-            minute.html("<string>" + m + " minute</strong>");
+            minute.html("<strong color='#F7491D'>" + m + " minute</strong>");
         }
         s -= m * 60;
         s = Math.floor(s);
+
+        if (s > 1) {
+//            seconds.html("<string>" + s + " secondes</strong>");
+        } else {
+//            seconds.html("<string>" + s + " seconde</strong>");
+        }
         setTimeout(diffDateTimeEvent, 1000);
         return true;
     } else {
@@ -364,11 +531,78 @@ function diffDateTimeEvent() {
         minute.hide();
         seconds.hide();
         fin.show();
-        fin.html("<strong>L'événement est en cours</strong>");
+        fin.html("<strong color='#606060'>L'événement est en cours</strong>");
+        return false;
+    }
+    return false;
+}
+
+function diffDateTimeEventMobile() {
+
+    var dateDebutEvent = $('.dateDebutEvent').html();
+    var dateNow = new Date();
+    var dateDebut = Date.parse(dateDebutEvent);
+    var days = $('#daysMobile');
+    var hour = $("#hourMobile");
+    var minute = $('#minuteMobile');
+    var seconds = $("#secondsMobile");
+    var fin = $("#finMobile").hide();
+
+    var s = (dateDebut.getTime() - dateNow.getTime()) / 1000;
+    var d = Math.floor(s / 86400);
+    if (d >= 0) {
+        if (d > 1) {
+            days.html("<strong color='#F7491D'>" + d + " jours </strong>");
+        } else {
+            days.html("<strong color='#F7491D'>" + d + " jour </strong>");
+        }
+        s -= d * 86400;
+
+        var h = Math.floor(s / 3600);
+        if (h > 1) {
+            hour.html("<strong color='#F7491D'>" + h + " heures </strong>");
+        } else {
+            hour.html("<strong color='#F7491D'>" + h + " heure </strong>");
+        }
+        s -= h * 3600;
+
+        var m = Math.floor(s / 60);
+        if (m > 1) {
+            minute.html("<strong color='#F7491D'>" + m + " minutes</strong>");
+        } else {
+            minute.html("<strong color='#F7491D'>" + m + " minute</strong>");
+        }
+        s -= m * 60;
+
+        s = Math.floor(s);
+
+        if (s > 1) {
+//            seconds.html("<string>" + s + " secondes</strong>");
+        } else {
+//            seconds.html("<string>" + s + " seconde</strong>");
+        }
+        setTimeout(diffDateTimeEvent, 1000);
+        return true;
+    } else {
+        days.hide();
+        hour.hide();
+        minute.hide();
+        seconds.hide();
+        fin.show();
+        fin.html("<strong color='#606060'>L'événement est en cours</strong>");
         return false;
     }
     return false;
 }
 
 
+function show_hide_form(bouton, questionId){
+    var form_commentaireElt = $('#form_commentaire_'+questionId).css('display');
+    if (form_commentaireElt=="none"){
+        $('#form_commentaire_'+questionId).show();
+    }
+    else{
+        $('#form_commentaire_'+questionId).hide();
+    }
+}
 

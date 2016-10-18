@@ -333,8 +333,8 @@ body {
 }
 .ch-info-wrap{
     position: absolute;
-    width: 180px;
-    height: 180px;
+    width: 200px;
+    height: 200px;
     border-radius: 50%;
     perspective: 800px;
     transition: all 0.4s ease-in-out;
@@ -348,8 +348,8 @@ body {
 }
 .ch-info{
     position: absolute;
-    width: 180px;
-    height: 180px;
+    width: 200px;
+    height: 200px;
     border-radius: 50%;
     transition: all 0.4s ease-in-out;
     transform-style: preserve-3d;
@@ -419,4 +419,17 @@ body {
 
 .ch-item:hover .ch-info {
     transform: rotate3d(0,1,0,-180deg);
+}
+
+/*liste des commentaire d'une question*/
+.table-commentaire-admin{
+    background-color: white;
+}
+
+#voirQuestions{
+    font-size: 130%;
+}
+
+#voirQuestions:hover{
+    color:green;
 }

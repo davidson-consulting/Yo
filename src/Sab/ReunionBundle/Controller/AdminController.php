@@ -11,6 +11,8 @@ use Symfony\Component\HttpFoundation\JsonResponse;
 use Sab\ReunionBundle\Form\EventType;
 use Sab\ReunionBundle\Entity\Question;
 use Sab\ReunionBundle\Form\QuestionType;
+use Sab\ReunionBundle\Entity\Commentaire;
+use Sab\ReunionBundle\Form\CommentaireType;
 
 /**
  * Description of AdminController
@@ -255,21 +257,31 @@ class AdminController extends Controller {
      * @return JsonResponse => Tableau de quesions
      */
     public function loadQuestionJsonAction(Event $event) {
+        $em = $this->getDoctrine()->getManager();
         $question = $event->getQuestion();
+        $question = $em->getRepository("ReunionBundle:Question")->findBy(array('event' => $event->getId() , 'flagDeleted' => false));
         $tabToJson = array();
+        $commentaireRepository = $em->getRepository('ReunionBundle:Commentaire');
         foreach ($question as $q) {
+
+            $count_commentaire = $commentaireRepository->countCommentaireForQuestionLevel1($q->getid());
+            foreach ($count_commentaire as $count)
+            {
+                $nbre_commentaire = $count;
+            }
             $tab = array(
-                'contenu' => $q->getContenu(),
-                'auteur' => $q->getAuteur(),
+                'contenu' => htmlentities($q->getContenu()),
+                'auteur' => htmlentities($q->getAuteur()),
                 'nbLike' => $q->getNbLike(),
                 'nbDislike' => $q->getNbDislike(),
-                'datePublication' => $q->getDatePublication()->format('d-m-Y H:i:s'),
+                'datePublication' => (string)$q->getDatePublication()->format('d-m-Y H:i:s'),
                 'idEvent' => $event->getId(),
                 'idQuestion' => $q->getId(),
                 'statutFocus' => $q->getIsfocus(),
                 'fav' => '<a href="#"><span class="glyphicon glyphicon-star-empty icon_focus_' . $q->getId() . '"></span></a>',
                 'delete' => '<a href="#"><span class="glyphicon glyphicon-trash icon_delete_' . $q->getId() . '" onClick="deleteQuestion(' . $q->getId() . ',' . $event->getId() . ')"></span></a>',
-                'modifier' => '<a href="#"><span class="glyphicon glyphicon-edit" title="Modifier" onClick="modifierQuestion(' . $q->getId() . ',' . $event->getId() .')"></span></a>'
+                'modifier' => '<a href="#"><span class="glyphicon glyphicon-edit" title="Modifier" onClick="modifierQuestion(' . $q->getId() . ',' . $event->getId() .')"></span></a>',
+                'commentaire' => '<a href="#"><span class="glyphicon glyphicon-comment" title="Commentaire" onClick="listerCommentaire(' . $q->getId() .')"></span></a><span> ('.$nbre_commentaire.')</span>'
             );
             $tabToJson[] = $tab;
         }
@@ -344,6 +356,7 @@ class AdminController extends Controller {
 
     /**
      * Modify question
+     * @param Question $question
      */
     public function modificationQuestionAction(Question $question) {
 
@@ -389,13 +402,173 @@ class AdminController extends Controller {
         $this->fayeClient("/focusQuestion", $data);
     }
     
+    /**
+    *  tunnel FayeClient update content question 
+    *   @param $data 
+    *   @return null
+    */
+
     public function subFayeClientUpdateContentQuestion($data){
         $this->fayeClient("/updateContentQuestion", $data);
     }
+    
+    /**
+    *  tunnel FayeClient 
+    *   @param $channel, $data 
+    *   @return null
+    */
 
     public function fayeClient($channel, $data) {
         $faye = $this->container->get('sab.reunion.faye.client');
         $faye->send($channel, $data);
+    }
+
+    /**
+    *  Chargement des commentaires pour une question 
+    *   @param Question 
+    *   @return jsonResponse array
+    */
+    public function loadCommentaireJsonAction(Question $question)
+    {
+        $em = $this->getDoctrine()->getManager();
+        // $commentaire = $question->getCommentaire();
+        $commentaire = $em->getRepository("ReunionBundle:Commentaire")->findBy(array('question' => $question->getId() , 'flagDeleted' => false , 'level' => 1));
+
+
+        $tabToJson = array();
+        foreach ($commentaire as $c) {
+
+            $reponses = $em->getRepository("ReunionBundle:Commentaire")->findBy(array('question' => $question->getId() , 'parentCommentId' => $c->getId() , 'flagDeleted' => false , 'level' => 2));
+
+            //nombres de réponses à un commentaire
+            $count_reponses = count($reponses);
+
+           
+            $tab = array(
+                'texte' => htmlentities($c->getTexte()),
+                'auteur' => htmlentities($c->getAuteur()),
+                'datePublication' => htmlentities($c->getDatePublication()->format('d-m-Y H:i:s')),
+                'idQuestion' => $question->getId(),
+                'idCommentaire' => $c->getId(),
+                'reponses' => '<a href="#"><span class="glyphicon glyphicon-comment" title="Commentaire" onClick="listerReponses(' . $c->getId() .')"></span></a><span> ('.$count_reponses.')</span>',
+                'delete' => '<a href="#"><span class="glyphicon glyphicon-trash icon_delete_' . $c->getId() . '" onClick="deleteCommentaire(' . $c->getId() . ',' . $question->getId() . ')"></span></a>',
+                'modifier' => '<a href="#"><span class="glyphicon glyphicon-edit" title="Modifier" onClick="modifierCommentaire(' . $c->getId() . ',' . $question->getId() .')"></span></a>'
+            );
+            $tabToJson[] = $tab;
+        }
+        //stats
+        $request = $this->getRequest();
+        if ($request->isXmlHttpRequest()) {
+            return new JsonResponse($tabToJson);
+        }
+
+        return new JsonResponse($tabToJson);
+    }
+
+/**
+*  Chargement des reponses aux commentaires
+*   @param Commentaire 
+*   @return jsonResponse array 
+*/
+    public function loadReponsesJsonAction(Commentaire $commentaire)
+    {
+        $em = $this->getDoctrine()->getManager();
+        // Get les réponses(commentaires de level 2) pour un commentaire
+        $reponse = $em->getRepository("ReunionBundle:Commentaire")->findBy(array('flagDeleted' => false , 'level' => 2 , 'parentCommentId' => $commentaire ));
+
+
+        $tabToJson = array();
+        foreach ($reponse as $c) {
+            
+            $tab = array(
+                'texte' => htmlentities($c->getTexte()),
+                'auteur' => htmlentities($c->getAuteur()),
+                'datePublication' => htmlentities($c->getDatePublication()->format('d-m-Y H:i:s')),
+                'idQuestion' => $commentaire->getId(),
+                'idCommentaire' => $c->getId(),
+                'delete' => '<a href="#"><span class="glyphicon glyphicon-trash icon_delete_' . $c->getId() . '" onClick="deleteCommentaire(' . $c->getId() . ',' . $c->getQuestion()->getId() . ')"></span></a>',
+                'modifier' => '<a href="#"><span class="glyphicon glyphicon-edit" title="Modifier" onClick="modifierCommentaire(' . $c->getId() . ',' . $c->getQuestion()->getId() .')"></span></a>'
+            );
+            $tabToJson[] = $tab;
+        }
+        //stats
+        $request = $this->getRequest();
+        if ($request->isXmlHttpRequest()) {
+            return new JsonResponse($tabToJson);
+        }
+
+        return new JsonResponse($tabToJson);
+    }
+
+/**
+*  Page des commentaires d'une question
+*   @param Question $question
+*   @return render page listCommentaireAdmin
+*/
+    public function questionListCommentaireAction(Question $question) {
+        $event = $question->getEvent();
+        return $this->render("ReunionBundle:Admin:listCommentaireAdmin.html.twig", array('event' => $event , 'question' => $question));
+    }
+
+/**
+*  Page des reponses aux commentaires
+*   @param Commentaire $commentaire
+*   @return render page listReponsesAdmin
+*/
+    public function commentaireListReponseAction(Commentaire $commentaire) {
+        $question = $commentaire->getQuestion();
+        $event = $question->getEvent();
+        return $this->render("ReunionBundle:Admin:listReponsesAdmin.html.twig", array('event' => $event , 'question' => $question, 'commentaire' => $commentaire));
+    }
+
+     /**
+     *modification commentaire
+     *   @param Commentaire $commentaire
+     */
+
+    public function modificationCommentaireAction(Commentaire $commentaire) {
+
+        $request = $this->getRequest();
+        if ($request->isXmlHttpRequest()) {
+            $em = $this->getDoctrine()->getManager();
+        }
+        return new Response($commentaire->getTexte());
+    }
+
+    /**
+     * save modification commentaire
+     */
+    public function saveModificationCommentaireAction() {
+        $em = $this->getDoctrine()->getManager();
+        $request = $this->getRequest();
+        if ($request->isXmlHttpRequest()) {
+            $idCommentaire = $request->request->get('idCommentaire');
+            $texte = $request->request->get('texte');
+            $c = $em->getRepository("ReunionBundle:Commentaire")->findById($idCommentaire);
+            $c[0]->setTexte($texte);
+            $em->flush();
+            //appeler fayeClient
+            $data = array(
+                'datas' => array(
+                'idCommentaire' => $idCommentaire,
+                'texte' => $texte,
+            ));
+            $this->subFayeClientUpdateContentCommentaire($data);     
+            
+        }
+        return new JsonResponse(
+                array(
+                    'statut' => 'ok'
+                )
+        );
+    }
+   /**
+    *  tunnel FayeClient update content commentaire 
+    *   @param $data 
+    */
+
+    public function subFayeClientUpdateContentCommentaire($data){
+        $this->fayeClient("/updateContentCommentaire", $data);
     }
 
 }

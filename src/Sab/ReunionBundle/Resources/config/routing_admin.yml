@@ -85,4 +85,58 @@ _save_modification_question:
     defaults:   { _controller: ReunionBundle:Admin:saveModificationQuestion }
     options:
         expose: true        
-     
+
+_list_commentaire:
+    path:       /{id}/listCommentaire/
+    defaults:  { _controller: ReunionBundle:Admin:questionListCommentaire }
+    requirements:
+        id:     \d+
+    options:
+        expose: true
+
+_list_reponses:
+    path:       /{id}/listReponses/
+    defaults:  { _controller: ReunionBundle:Admin:commentaireListReponse }
+    requirements:
+        id:     \d+
+    options:
+        expose: true
+
+_load_commentaire_json:
+    path:       /loadcommentaire/{id}
+    defaults:  { _controller: ReunionBundle:Admin:loadCommentaireJson }
+    requirements:
+        id:     \d+
+    options:
+        expose: true
+
+_load_reponse_json:
+    path:       /loadreponse/{id}
+    defaults:  { _controller: ReunionBundle:Admin:loadReponsesJson }
+    requirements:
+        id:     \d+
+    options:
+        expose: true
+
+_delete_commentaire:
+    path:       /deleteCommentaire/{id}
+    defaults:   {_controller: ReunionBundle:Commentaire:deleteCommentaire }
+    requirements:
+        id:     \d+
+    options:
+        expose: true
+
+_modification_commentaire:
+    path:       /modifierCommentaire/{id}
+    defaults:   { _controller: ReunionBundle:Admin:modificationCommentaire }
+    requirements:
+        id:     \d+
+    options:
+        expose: true
+        
+_save_modification_commentaire:
+    path:       /saveModifierCommentaire/
+    defaults:   { _controller: ReunionBundle:Admin:saveModificationCommentaire }
+    options:
+        expose: true
+   

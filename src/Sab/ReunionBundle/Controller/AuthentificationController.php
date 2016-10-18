@@ -11,7 +11,6 @@ use Symfony\Component\HttpFoundation\Cookie;
  * @author sabar Guechoud <guechoudsaby@gmail.com>
  */
 class AuthentificationController extends QuestionController {
-    
     /**
      * Rediriger vers la bonne url selon le role de l'utilisateur 
      */

@@ -8,7 +8,7 @@ use Sab\ReunionBundle\Form\QuestionType;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Finder\Finder;
 use Symfony\Component\HttpFoundation\JsonResponse;
-
+use Sab\ReunionBundle\Entity\Commentaire;
 /**
  * Description of QuestionController (Gestion des questions)
  * 
@@ -16,9 +16,10 @@ use Symfony\Component\HttpFoundation\JsonResponse;
  * @author Sabar Guechoud <guechoudsaby@gmail.com>
  */
 class QuestionController extends Controller {
-
-    /**
-     * Ajouter une questions
+     
+     /**
+     * decrement Question like
+     * @param Question $question
      */
     public function addQuestionAction() {
         $request = $this->getRequest();
@@ -41,6 +42,7 @@ class QuestionController extends Controller {
         $questionType = new QuestionType();
         $form = $this->createForm($questionType, $question);
         if ($form->handleRequest($request)->isValid()) {
+            $question->setFlagDeleted(false);
             $em->persist($question);
             $question->setEvent($event);
             $event->addQuestion($question);
@@ -53,6 +55,7 @@ class QuestionController extends Controller {
             return $this->redirect($this->generateUrl('user_dashboard'));
         }
         $questions = $questionRepository->triQuestion($eventId);
+        $commentairesRepository = $em->getRepository('ReunionBundle:Commentaire');
 
         return $this->render("ReunionBundle:User:index.html.twig", array(
                     'form' => $form->createView(),
@@ -60,6 +63,7 @@ class QuestionController extends Controller {
                     'event' => $event,
                     'countQuestion' => $countQuestion,
                     'dateDebutEvent' => $dateDebutEvent,
+                    'commentairesRepository' => $commentairesRepository,
         ));
     }
 
@@ -69,11 +73,18 @@ class QuestionController extends Controller {
      */
     public function deleteQuestionAction(Question $question) {
         $em = $this->getDoctrine()->getManager();
-        
+        $commentaires = $em->getRepository("ReunionBundle:Commentaire")->findBy(array('question' => $question->getId() , 'flagDeleted' => false));
+
         $data = array('id' => $question->getId());
         $this->fayeClient("/deleteQuestion", $data);
         
-        $em->remove($question);
+        foreach ($commentaires as $commentaire) {
+            $commentaire->setFlagDeleted(true);
+            $em->flush();
+        }
+        
+        $question->setFlagDeleted(True);
+        // $em->remove($question);
         $em->flush();
         
         return new JsonResponse("OK");
@@ -129,7 +140,6 @@ class QuestionController extends Controller {
             return new Response($nbDisLikeNew);
         }
     }
-    
     /**
      * Décrementer le nombre de like d'une question
      * @param Question $question
@@ -154,6 +164,7 @@ class QuestionController extends Controller {
             }
             $this->subFayeClientRefresh($idEvent);
         }
+        return new Response($nbDislikeNow);
     }
 
     /**
@@ -221,8 +232,8 @@ class QuestionController extends Controller {
     public function subAddQuestion($question) {
         $data = array('datas' => array(
                 'id' => $question->getId(),
-                'contenu' => $question->getContenu(),
-                'auteur' => $question->getAuteur(),
+                'contenu' => htmlentities($question->getContenu()),
+                'auteur' => htmlentities($question->getAuteur()),
                 'nbLikes' => $question->getNbLike(),
                 'nbDisLikes' => $question->getNbDislike(),
                 'datePublication' => $question->getDatePublication(),

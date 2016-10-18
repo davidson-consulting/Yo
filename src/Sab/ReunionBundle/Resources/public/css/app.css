@@ -9,11 +9,29 @@ body,html, #displayDoc{
     position: relative;
     height: 100%;
     width: 100%;
-    height: 100%;
 }   
 
+.modal {
+  text-align: center;
+  padding: 0!important;
+}
 
+.modal:before {
+  content: '';
+  display: inline-block;
+  height: 100%;
+  vertical-align: middle;
+  margin-right: -4px; /* Adjusts for spacing */
+}
+.modal-backdrop{
+    z-index: 1 !important;
+}
 
+.modal-dialog {
+  display: inline-block;
+  text-align: left;
+  vertical-align: middle;
+}
 /**************************swiper css**********************************/
 .swiper-container {
     width: 100%;
@@ -63,6 +81,7 @@ body,html, #displayDoc{
 #logo h1{
     text-shadow: 3px 3px 4px #3E3F3D;
     font-size: 3em;
+    
 }
 
 #containerLogin{
@@ -114,30 +133,48 @@ body,html, #displayDoc{
 /*-------------------------------------------------------------------------------------*/ 
 /*----------------------------------DASHBOARD USER-------------------------------------*/ 
 /*--------------------------------------------------------------------------------------*/ 
-.body-app, .body-logo{
+.body-app{
     background-image: url("../images/bg.jpg");
     background-repeat: no-repeat;
-    background-size: cover;
-    width: 100%;
-    height: 100%;
-    position: fixed;
-    z-index: 9999;
+    background-size: 100% 100%;
+    background-attachment: fixed;
+    /*width: 100%;*/
+    /*height: 100%;*/
+    /*position: fixed;*/
+    /*z-index: 9999;*/
 }
 
-.dashBoardBody{
-    margin: auto;
-    background-color: rgba(255,255,255, 0.8);
+.body-logo{
+    background-image: url("../images/bg.jpg");
+    background-repeat: no-repeat;
+    background-size: 100% 100%;
+    background-attachment: fixed;
+    width: 100%;
     height: 100%;
+    /*position: fixed;*/
+    /*z-index: 9999;*/
 }
+html   {
+    
+    /*overflow-x: auto;*/
+}
+body-app {
+    
+
+}
+
+
 .banner{
     /*background-image: url("../../../../doc/event_1/banners/banner.png");*/
     background-repeat: no-repeat;
     background-size: 100% 100%;
     border-radius: 56px 56px 0px 0px;
+
 }
 .nameApplication{
     /*margin-left: 15px;*/
     padding-top: 5px;
+    /*position:fixed;*/
     /*margin-top: 8px;*/
 }
 /*.nameApplication > h1, .nameEvent{
@@ -146,12 +183,28 @@ body,html, #displayDoc{
     font-size: 3em;
 }*/
 
+.commentairelevel2{
+    margin-left: 10px;
+    margin-right: 10px;
+    /*box-shadow: 1px 1px 1px -1px #2196F3;
+    -moz-box-shadow: 1px 1px 1px -1px #2196F3;
+    -webkit-box-shadow: 1px 1px 1px -1px #2196F3;
+    -o-box-shadow: 1px 1px 1px -1px #2196F3;
+    padding: 2px;*/
+    background-color: #DDDDDD;
+    font-family:Tahoma;
+}
+.commentLevel2{
+
+    box-shadow: 1px 1px 1px 1px #BBDEFB; 
+    
+}
 .nameEvent{
-    float: right;
+    /*float: right;*/
     color: #ffffff;
     text-shadow: 3px 3px 4px #3E3F3D;
-    margin-top: 181px;
-    margin-right: 21px;
+    /*margin-top: 181px;*/
+    /*margin-right: 21px;*/
 }
 
 .nameEvent{
@@ -163,31 +216,38 @@ body,html, #displayDoc{
 .logo{
     position: relative;
     top: -77px;
-    left: 47px;
+    /*left: 47px;*/
 }
 
-#containerQuestion{
+/*.containerQuestion{
     float: right;
     width: 70%;
-    /*position: relative;*/
-    /*top: -170px;*/
-    margin-top: -171px;
-}
+    position: relative;
+    top: -170px;
+    margin-top: -171px !important;
+    height: 100%
+}*/
 .infoEvent{
-    float: left;
-    /*position: fixed;*/
-    margin-left: 22px;
+    /*float: left;*/
+    position: relative;
+    /*margin-left: 22px;*/
 
 }
+
+.fixed {position:fixed;top:50px;}
+
 .list-question{
-    height: 100%;
-    overflow-x: auto;
+    
     /*-webkit-overflow-scrolling: touch;*/
     /*    overflow-y: scroll !important;
         -webkit-overflow-scrolling:touch !important;
     */
 
 }
+textarea{
+    resize: vertical;
+}
+
 
 #show_question_title{
     color: #565656;
@@ -196,13 +256,14 @@ body,html, #displayDoc{
 .question{
     margin: 23px -11px 0px 0px;
     background-color: #E7ECEC;
-    border-radius: 14px;
+    border-radius: 15px 15px 0 0;
     box-shadow: 2px 8px 10px -12px #000;
     margin-right: 22px;
     clear: both;
     display: inline-flex;
     width: 100%;
 }
+
 .question_focus{
     margin: 23px -11px 0px 0px;
     background-color: #E7ECEC;
@@ -213,6 +274,7 @@ body,html, #displayDoc{
     display: inline-flex;
     width: 100%;
 }
+
 .list-question, .list-question li{
     text-decoration: none;
     list-style: none;
@@ -224,6 +286,308 @@ body,html, #displayDoc{
     width: 46px;
     height: 47px;
 }
+
+/* commentaire */
+.commentaire_container{
+    width:100%;
+    margin-bottom: 10px;
+    border-bottom-right-radius: 14px;
+    border-bottom-left-radius: 14px;  
+}
+
+.list-commentaire{
+    height: 100%;
+    overflow-x: auto;
+}
+
+.header_commentaire{
+    background-color:#E7ECEC;
+    box-shadow: 2px 8px 10px -12px #1976D2;
+    text-align:right;
+    color:#898989;
+    padding-bottom: 5px;
+    border-bottom:outset 1px;
+    border-color: #E4EFEF;
+    border-radius: 15px 15px 0 0;
+
+}
+.button_plus{
+    background-color: Transparent;
+    background-repeat:no-repeat;
+    border: none;
+    cursor:pointer;
+    overflow: hidden;
+    outline:none;
+}
+
+.buttonAddCommentaire{
+    margin-right: 30px;
+    color:#898989;
+}
+
+.nbre_commentaire{
+    margin-right: 15px;
+    color:#898989;
+}
+
+#title_question, #postedBy, #postedDateTitle{
+    color:#01948E;
+}
+
+
+.buttonListCommentaire{  
+    background-color: Transparent;
+    background-repeat:no-repeat;
+    border: none;
+    cursor:pointer;
+    overflow: hidden;
+    outline:none;
+}
+
+.commentaire{
+    background-color: #E7ECEC;
+    box-shadow: 2px 8px 10px -12px #000;
+    clear: both;
+    display: inline-flex;
+    margin-bottom: 25px;
+    border-bottom-right-radius: 12px;
+    border-bottom-left-radius: 12px;
+    width: 100%;
+}
+
+.blockContenuCommentaire{
+    padding-top: 23px;
+    background-color: #E4EFEF;
+    color: #898989;
+    float: left;
+    width: 100%;
+    border-bottom-right-radius: 14px;
+    border-bottom-left-radius: 14px;
+    padding-left: 25px; 
+}
+
+
+
+.contenuCommentaire{
+    margin-bottom:20px;
+    padding-left: 10px; 
+}
+
+.c_auteur {
+    float: right;
+    padding-right: 15px;
+    font-style: italic;
+    font-size: 0.8em;
+    color :#01948E;
+    width: 75%;
+    text-align: right;
+
+}
+.c_auteurLevel2 {
+    text-align: right;
+    padding-right: 15px;
+    font-style: italic;
+    font-size: 0.8em;
+    color :#01948E;
+    width: 75%;
+    float: right;
+
+}
+
+.commentCommentaire{
+    float: left;
+    padding-right: 15px;
+    /*font-weight: bold;*/
+    font-size: 0.9em;
+
+}
+
+.btnAddComment{
+    border : 1px solid #01948E;
+    padding: 1px 2px;
+    background-color:#01948E;
+    color:#FFF;
+    border-radius: 4px;
+}
+
+.btnAddComment:hover{
+    color:#01948E;
+    background-color:#FFF;
+}
+
+.commentComment{
+
+    cursor: pointer;
+    border : 1px solid #01948E;
+    padding: 1px 2px;
+    background-color:#01948E;
+    color:#FFF;
+    border-radius: 4px;
+    white-space: normal;
+
+}
+.commentComment:hover{
+
+    color:#01948E;
+    background-color:#FFF;
+
+}
+
+/*#loadingmessage{
+ position: fixed;
+  z-index: 999;
+  height: 50px;
+  max-width: 10%;
+  max-height: 10%;
+  width: 50px;
+  overflow: show;
+  margin:0 auto;
+  top:0;
+
+}*/
+
+.imgLoading{
+   position: fixed;
+  z-index: 999;
+  height: 120px;
+  max-width: 120px;
+  max-height: 120px;
+  width: 120px;
+  overflow: show;
+  margin:0 auto;
+  top:50%;
+  bottom: 50%
+  left:52%;
+  right: 38%;
+}
+
+/*liste commentaire */
+.commentaire_title{
+    font-size:18px;
+    padding-left: 10px;
+}
+
+.modal_contenuCommentaire{
+    /*border-bottom: 1px solid #1976D2;*/
+    /*border-top: 1px solid #1976D2;*/
+    /*box-shadow: 10px 10px 10px -12px #1976D2;*/
+    padding-top: 5px;
+    padding-bottom: 5px;
+    padding-left: 10px;
+    color:#000;
+    font-family:Tahoma;
+    /*background-color: #E7ECEC;*/
+    /*opacity: 1;*/
+}
+
+.liste_commentaire{
+    border-radius: 23px;
+    background-color:#EFECEC;
+    /*background-color: rgba(255,255,255, 0.9);*/
+    opacity: 1;
+    padding-bottom: 19px;
+    padding-right: 1px;
+    padding-left: 1px;
+}
+
+.modal-dialog{
+    overflow: initial; !important
+    background-color:#E7ECEC; 
+}
+
+.modal-body-commentaire{
+    overflow-y: auto;
+    max-height: 700px;
+    opacity: 1;
+    background-color: #E7ECEC;
+}
+
+
+.form_commentaire{
+    top: 85px;
+    overflow: visible;
+    opacity:1;
+}
+
+.btnShowMenu{
+    border: none;
+    background: none;
+}
+
+/*formulaire commentaire */
+.form-name-auteur-commentaire span:first-child{
+    color: #606060;
+}
+
+.form-name-auteur-commentaire span:nth-child(2){
+    display: block;
+    font-size: 10px;
+    font-style: italic;
+    color: #8F8F8F;
+    text-align: center;
+}
+
+.form-auteur-commentaire div{
+    margin-top: 7px;
+    display: inline;
+}
+
+.envoyer-commentaire{
+    display: inline-block;
+    margin-left: 5px;
+    float: right;
+    padding: 8px;
+    width: 70px;
+    margin-top: 3px;
+    border-radius: 9px;
+    border: none;
+    background-color: #dddddd;
+    box-shadow: 0px -4px 4px 0px #adadae inset;
+}
+
+.formAddCommentaire{
+    border-radius: 23px;
+    background-color: rgba(255,255,255, 0.9);
+}
+.
+
+.form-control-commentaire, .form-auteur-input-commentaire
+{
+    background-color: #E7ECEC;
+    border-radius: 9px;
+    border: none;
+
+}
+
+.form-title
+{
+    font-size: 19px;
+}
+
+.form-control-commentaire{
+    width:100%;
+    background-color:#d5d5d5;
+    border-radius: 9px;
+    border: none;
+    padding: 1px 5px;
+}
+
+.form-auteur-input-commentaire{
+    padding: 8px;
+    width: 30%;
+    background-color: #d5d5d5;
+    border-radius: 9px;
+    border: none;
+}
+
+.form-auteur-commentaire{
+    margin-top: 3px;
+}
+
+.form-name-auteur-commentaire{
+    padding-right: 15px;
+}
+
 
 
 /*list question*/
@@ -238,6 +602,7 @@ body,html, #displayDoc{
     font-size: 2em;
     color: #565656;
 }
+
 .likebutton{
     background-image: url("../images/Like-dislike.png");
     width: 47px;
@@ -253,16 +618,26 @@ body,html, #displayDoc{
     background-repeat: no-repeat;
     background-position: 0px -34px;
 }
+
 .likebutton:hover, .disLikebutton:hover{
     cursor: pointer;
+}
+.likebutton:hover{
+    background-position:0px -60px;
+}
+
+.disLikebutton:hover{
+    background-position: 0px -94px;
 }
 
 .blockContenuQuestion{
     padding-top: 33px;
-    color: #898989;
+    color: #707070;
     float: left;
-    width: 100%;
+    width: 84%;
+    font-size:19px;
 }
+
 .auteur{
     float: right;
     padding-right: 15px;
@@ -270,40 +645,24 @@ body,html, #displayDoc{
     font-size: 0.8em;
     padding-top: 65px;
     margin-bottom: 15px;
+    color:#01948E;
 }
+
 .contenuQuestion{
     word-wrap: break-word;
     width: 100%;
 }
-
+.parag{
+    word-wrap:break-word;
+    width:90%;
+}
 .buttonAddQuestion{
-    margin: auto;
-    width: 194px;
+    /*margin: auto;*/
+    /*width: 194px;*/
 }
 
-.addQuestion{
-    height: 51px;
-    width: 194px;
-    border-radius: 9px;
-    border: 0px;
-    /* IE10 Consumer Preview */ 
-    background-image: -ms-linear-gradient(top left, #E5E6E6 0%, #AAAAAA 100%);
-    /* Mozilla Firefox */ 
-    background-image: -moz-linear-gradient(top left, #E5E6E6 0%, #AAAAAA 100%);
-    /* Opera */ 
-    background-image: -o-linear-gradient(top left, #E5E6E6 0%, #AAAAAA 100%);
-    /* Webkit (Safari/Chrome 10) */ 
-    background-image: -webkit-gradient(linear, left top, right bottom, color-stop(0, #E5E6E6), color-stop(1, #AAAAAA));
-    /* Webkit (Chrome 11+) */ 
-    background-image: -webkit-linear-gradient(top left, #E5E6E6 0%, #AAAAAA 100%);
-    /* W3C Markup, IE10 Release Preview */ 
-    background-image: linear-gradient(to bottom right, #E5E6E6 0%, #AAAAAA 100%);
-    margin-top: 26px;
-    color: #606060;
-}
-.addQuestion:hover{
-    cursor: pointer;
-}
+
+
 .icon-add-question{
     background-image: url("../images/plus_add_question.png");
     width: 29px;
@@ -311,29 +670,27 @@ body,html, #displayDoc{
     margin: 12px;
     float: left;
 }
+
 .addQuestion span{
     float: left;
-    margin-top: 15px;
+    text-align: center;
+    /*margin-top: 15px;*/
 }
+
 #displayDoc{
     width: 100%;
     height: 439px;
     margin-top: 13px;
 }
-.addQuestionMobile{
-    display: none;
-    font-size: 0.5em;
-    position: relative;
-    top: 4px;
-    float: right;
-    margin-right: 6px;
-}
+
+
 
 /*modal*/
 
 .form-name-auteur span:first-child{
     color: #606060;
 }
+
 .form-name-auteur span:nth-child(2){
     display: block;
     font-size: 10px;
@@ -424,19 +781,10 @@ body,html, #displayDoc{
     color: #898989;
 }
 
-#days, #hour, #minute, #fin{
-    text-align: center;
-    padding-top: 6px;
-}
 
 
-.info-event, #hour, #minute, #fin{
-    color: #565656;
-    font-size: 1.3em;
-    font-weight: bold;
-    text-align: center;
-    padding-top: 6px;
-}
+
+
 
 .block-read-presentation:hover{
     cursor: pointer;
@@ -446,6 +794,8 @@ body,html, #displayDoc{
     font-size: 2em;
     display: none;
 }
+
+
 
 /*-----------------------------------------------------------------------------------------*/ 
 /*----------------------------------END DASHBOARD USER-------------------------------------*/ 
@@ -461,6 +811,10 @@ body,html, #displayDoc{
     #logo{
         padding-bottom: 20%;
     }
+    .buttonMenu{
+        margin-top: 90px;
+    }
+
 }
 
 
@@ -512,6 +866,9 @@ body,html, #displayDoc{
         padding: 10px 10px 26px;
 
     }
+    .modal-dialog{
+        width:85%;
+    }
     #Authentification{
         width: 93%;
         padding: 9px;
@@ -524,7 +881,7 @@ body,html, #displayDoc{
         margin-top: 15px;
     }
     #logo{
-        margin: auto;
+        /*margin: auto;*/
         padding-bottom: 22px;
         padding-top: 36px;
         color: #FFF;
@@ -533,6 +890,13 @@ body,html, #displayDoc{
         font-size: 1.8em;
         margin: auto;
     }
+    .blockLike{
+        padding-right: 0px;
+    }
+    .contenuQuestion{
+        width:90%;
+    }
+
 }
 
 /************paysage iphone 4********************************/
@@ -540,7 +904,7 @@ body,html, #displayDoc{
     #containerLogin{
         width: 64%;
         margin: auto;
-        height: 80%;
+        /*height: 80%;*/
         padding-top: 5px;
 
     }
@@ -565,6 +929,7 @@ body,html, #displayDoc{
     .form-group{
         margin: 0px;
     }
+
 }
 
 /*--------------------------resposive mobile dashboard user-----------------------------*/
@@ -580,8 +945,8 @@ body,html, #displayDoc{
         display: none;
     }
     .nameApplication{
-        margin: auto;
-        width: 147px;
+        /*margin: auto;*/
+        /*width: 147px;*/
         padding-bottom: 5px;
     }
     .nameApplication h1, .nameEvent{
@@ -592,20 +957,20 @@ body,html, #displayDoc{
                 left: 35%;
                 width: 96px;
                 height: 97px;*/
-        display: none;
+        /*display: none;*/
     }
-    /*    .logo img{
+        .logo img{
             width: 98px;
             height: 98px;
-        }*/
+        }
     .nameEvent{
-        margin-top: 11px;
-        margin-right: 1px;
+        /*margin-top: 11px;*/
+        /*margin-right: 1px;*/
     }
 
     .menu{
         display: inline;
-        top: 20px;
+        /*top: 20px;*/
         position: absolute;
     }
     .menu:hover{
@@ -613,7 +978,7 @@ body,html, #displayDoc{
     }
 
     .infoEvent{
-        display: none;
+      /*  display: none;
         float: right;
         background-color: rgba(255, 255, 255, 0.4);
         padding: 6px 14px 6px 12px;
@@ -621,26 +986,26 @@ body,html, #displayDoc{
         margin-top: 15px;
         margin-left: 0px;
         width: 100%;
-        margin-right: 4px;
+        margin-right: 4px;*/
     }
 
-    .info-event, #hour, #minute, #fin{
+    .info-event, #hour, #minute, #fin, #daysMobile, #hourMobile, #minuteMobile, #finMobile{
         font-size: 1.1em;
     }
     .decompte span:nth-child(2), .nb-question-posee span:nth-child(2){
         display: none;
     }
-    .info-event, .info-decompte, #days, #hour, #minute, #fin{
+    .info-event, .info-decompte, #days, #hour, #minute, #fin ,#daysMobile, #hourMobile, #minuteMobile, #finMobile{
         display: inline-block;
     }
 
-    #containerQuestion{
+    /*.containerQuestion{
         width: 104%;
         height: 100%;
-        /*margin-top: -56px;*/
-        margin-top: -12px;
+        margin-top: -56px;
+        margin-top: -12px !important;
         float: none;
-    }
+    }*/
     .list-question{
         /*overflow-x: hidden;*/
         overflow-x: auto;
@@ -650,7 +1015,7 @@ body,html, #displayDoc{
         margin-top: -1px;
     }
     .blockContenuQuestion{
-        width: 100%;
+        width: 84%;
     }
     #show_question_title{
         font-size: 23px;
@@ -661,25 +1026,26 @@ body,html, #displayDoc{
     .nbLike, .nbDisLike{
         font-size: 1.3em;
     }
-    .addQuestionMobile{
+  /*  .addQuestionMobile{
         display: inline;
-    }
+    }*/
     .auteur{
         padding-top: 20px;
     }
     .plus-add-question{
         display: inline;
     }
-    .icon-add-question, .new-question-label{
+    /*.icon-add-question, .new-question-label{
         display: none;
-    }
-    .addQuestion{
+        color: blue;
+    }*/
+    /*.addQuestion{
         background-image: none;
         color: white;
-    }
-    .new-question-label{
+    }*/
+  /*  .new-question-label{
         display: none;
-    }
+    }*/
     .contenuQuestion{
         width: 148px;
     }
@@ -694,6 +1060,8 @@ body,html, #displayDoc{
     .form-auteur-input{
         width: 100%;
     }
+
+    
 
 }
 
@@ -703,11 +1071,11 @@ body,html, #displayDoc{
         background-size: 100% 59%;
         width: 100%;
         margin-bottom: -87px;
-        height: 211px;
+        height: 190px;
     }
     .nameApplication{
-        margin: auto;
-        width: 147px;
+        /*margin: auto;*/
+        /*width: 147px;*/
         padding-bottom: 5px;
     }
     .nameApplication h1, .nameEvent{
@@ -715,8 +1083,8 @@ body,html, #displayDoc{
     }
     .logo{
         top: -48px;
-        left: 35%;
-        width: 96px;
+        /*left: 35%;*/
+        /*width: 96px;*/
         height: 97px;
     }
     .logo img{
@@ -725,20 +1093,18 @@ body,html, #displayDoc{
     }
     .nameEvent{
         margin-top: 11px;
-        margin-right: 1px;
+        /*margin-right: 1px;*/
     }
 
     .menu{
         display: inline;
-        top: 196px;
+        /*top: 196px;*/
         position: absolute;
     }
-    .menu:hover{
-        cursor: pointer;
-    }
+    
 
     .infoEvent{
-        display: none;
+/*        display: none;
         float: right;
         background-color: rgba(255, 255, 255, 0.4);
         padding: 6px 14px 6px 12px;
@@ -746,33 +1112,34 @@ body,html, #displayDoc{
         margin-top: -36px;
         margin-left: 0px;
         width: 100%;
-        margin-right: 4px;
+        margin-right: 4px;*/
     }
 
-    .info-event, #hour, #minute, #fin{
+    .info-event, #hour, #minute, #fin, #daysMobile, #hourMobile, #minuteMobile, #finMobile{
         font-size: 1.1em;
     }
     .decompte span:nth-child(2), .nb-question-posee span:nth-child(2){
         display: none;
     }
-    .info-event, .info-decompte, #days, #hour, #minute, #fin{
+    .info-event, .info-decompte, #days, #hour, #minute, #fin, #daysMobile, #hourMobile, #minuteMobile, #finMobile{
         display: inline-block;
     }
 
-    #containerQuestion{
+  /*  .containerQuestion{
         width: 104%;
         height: 100%;
-        margin-top: -56px;
+        margin-top: -56px !important;
         float: none;
-    }
+    }*/
     .list-question{
         overflow-x: hidden;
+        height: 200px ;
     }
     .list-question section:first-child{
         margin-top: -1px;
     }
     .blockContenuQuestion{
-        width: 100%;
+        width: 84%;
     }
     #show_question_title{
         font-size: 23px;
@@ -783,25 +1150,25 @@ body,html, #displayDoc{
     .nbLike, .nbDisLike{
         font-size: 1.3em;
     }
-    .addQuestionMobile{
+   /* .addQuestionMobile{
         display: inline;
-    }
+    }*/
     .auteur{
         padding-top: 20px;
     }
     .plus-add-question{
         display: inline;
     }
-    .icon-add-question, .new-question-label{
+   /* .icon-add-question, .new-question-label{
         display: none;
-    }
-    .addQuestion{
+    }*/
+   /* .addQuestion{
         background-image: none;
         color: white;
-    }
-    .new-question-label{
+    }*/
+    /*.new-question-label{
         display: none;
-    }
+    }*/
     .contenuQuestion{
         width: 148px;
     }
@@ -819,6 +1186,9 @@ body,html, #displayDoc{
     .msgInfo{
         width: 249px;
         right: 10%;
+    }
+    .blockLike{
+        padding-right: 0px;
     }
 }
 
@@ -832,7 +1202,7 @@ body,html, #displayDoc{
         padding: 6px 1px 6px 12px;
     }
     .contenuQuestion{
-        width: 100%;
+        width: 148px;
     }
     .blockLike{
         padding-right: 0px;
@@ -841,25 +1211,48 @@ body,html, #displayDoc{
 
 @media screen and (orientation:portrait) and (max-width: 240px){
     .logo{
-        left: 28%;
+        /*left: 28%;*/
     }
     body{
         position: inherit;
         background-size: auto;
 
     }
-    .addQuestionMobile{
+   /* .addQuestionMobile{
         font-size: 0.4em;
-    }
+    }*/
     #show_question_title{
         font-size: 21px;
     }
     .list-question{
         height: 500px;
     }
-    .dashBoardBody{
-        height: auto;
+  .contenuQuestion{
+        width:200px;
     }
+}
+@media screen and (min-width: 481px) and (max-width: 570px){
+
+.body-app{
+        background-size: 100% 100%;
+}
+.banner{
+        background-size: 100% 59%;
+        width: 100%;
+        margin-bottom: -79px;
+        height: 190px;
+    }
+    .logo{
+        top: -48px;
+        /*left: 42%;*/
+        /*width: 96px;*/
+        height: 97px;
+    }
+    .logo img{
+        width: 98px;
+        height: 98px;
+    }
+
 }
 
 @media screen and (orientation:landscape) and (max-width: 568px){
@@ -869,24 +1262,29 @@ body,html, #displayDoc{
     }
 
     body, .body-app{
-        position: inherit;
+        /*position: inherit;*/
         background-size: auto;
+    }
+    .body-app{
+        position: fixed;
+        height: 100%;
+        background-size: 100% 100%;
     }
     #logo{
         padding-top: 6px;
     }
-    #containerLogin{
+  /*  #containerLogin{
         height: 87%;
-    }
+    }*/
     .banner{
         background-size: 100% 59%;
         width: 100%;
         margin-bottom: -87px;
-        height: 211px;
+        height: 190px;
     }
     .nameApplication{
-        margin: auto;
-        width: 147px;
+        /*margin: auto;*/
+        /*width: 147px;*/
         padding-bottom: 5px;
     }
     .nameApplication h1, .nameEvent{
@@ -894,8 +1292,8 @@ body,html, #displayDoc{
     }
     .logo{
         top: -48px;
-        left: 42%;
-        width: 96px;
+        /*left: 42%;*/
+        /*width: 96px;*/
         height: 97px;
     }
     .logo img{
@@ -904,12 +1302,12 @@ body,html, #displayDoc{
     }
     .nameEvent{
         margin-top: 11px;
-        margin-right: 1px;
+        /*margin-right: 1px;*/
     }
 
     .menu{
         display: inline;
-        top: 196px;
+        /*top: 196px;*/
         position: absolute;
     }
     .menu:hover{
@@ -917,7 +1315,7 @@ body,html, #displayDoc{
     }
 
     .infoEvent{
-        display: none;
+      /*  display: none;
         float: right;
         background-color: rgba(255, 255, 255, 0.4);
         padding: 6px 14px 6px 12px;
@@ -925,25 +1323,25 @@ body,html, #displayDoc{
         margin-top: -36px;
         margin-left: 0px;
         width: 100%;
-        margin-right: 4px;
+        margin-right: 4px;*/
     }
 
-    .info-event, #hour, #minute, #fin{
+    .info-event, #hour, #minute, #fin,#daysMobile, #hourMobile, #minuteMobile, #finMobile{
         font-size: 1.1em;
     }
     .decompte span:nth-child(2), .nb-question-posee span:nth-child(2){
         display: none;
     }
-    .info-event, .info-decompte, #days, #hour, #minute, #fin{
+    .info-event, .info-decompte, #days, #hour, #minute, #fin, #daysMobile, #hourMobile, #minuteMobile, #finMobile{
         display: inline-block;
     }
 
-    #containerQuestion{
+ /*   .containerQuestion{
         width: 104%;
         height: 100%;
-        margin-top: -56px;
+        margin-top: -56px !important;
         float: none;
-    }
+    }*/
     .list-question{
         overflow-x: auto;
     }
@@ -951,7 +1349,7 @@ body,html, #displayDoc{
         margin-top: -1px;
     }
     .blockContenuQuestion{
-        width: 100%;
+        width: 84%;
     }
     #show_question_title{
         font-size: 23px;
@@ -962,25 +1360,25 @@ body,html, #displayDoc{
     .nbLike, .nbDisLike{
         font-size: 1.3em;
     }
-    .addQuestionMobile{
+    /*.addQuestionMobile{
         display: inline;
-    }
+    }*/
     .auteur{
         padding-top: 20px;
     }
     .plus-add-question{
         display: inline;
     }
-    .icon-add-question, .new-question-label{
+    /*.icon-add-question, .new-question-label{
         display: none;
-    }
-    .addQuestion{
+    }*/
+   /* .addQuestion{
         background-image: none;
         color: white;
-    }
-    .new-question-label{
+    }*/
+   /* .new-question-label{
         display: none;
-    }
+    }*/
     .contenuQuestion{
         width: 148px;
     }
@@ -995,13 +1393,16 @@ body,html, #displayDoc{
     .form-auteur-input{
         width: 100%;
     }
-    .dashBoardBody{
-        height: auto;
-    }
+   
 
 }
 @media screen and (orientation:landscape) and (max-width: 667px){
-    .bienvenue{
+    .body-app{
+        position: fixed;
+        height: 100%;
+        background-size: 100% 100%;
+    }
+    /*.bienvenue{
         margin-top: 0px;
         margin-bottom: 4px;
     }
@@ -1035,16 +1436,18 @@ body,html, #displayDoc{
         left: 42%;
         width: 96px;
         height: 97px;
-    }
+    }*/
     .logo img{
         width: 98px;
         height: 98px;
-    }
-    .nameEvent{
+    };/*
+   .nameEvent{
         margin-top: 11px;
         margin-right: 1px;
     }
 
+
+ 
     .menu{
         display: inline;
         top: 196px;
@@ -1056,7 +1459,7 @@ body,html, #displayDoc{
 
     .infoEvent{
         display: none;
-        float: right;
+        float: left;
         background-color: rgba(255, 255, 255, 0.4);
         padding: 6px 14px 6px 12px;
         border-radius: 16px;
@@ -1075,13 +1478,14 @@ body,html, #displayDoc{
     .info-event, .info-decompte, #days, #hour, #minute, #fin{
         display: inline-block;
     }
-
-    #containerQuestion{
+*/
+    /*.containerQuestion{
         width: 104%;
         height: 100%;
-        margin-top: -56px;
+        margin-top: -56px !important;
         float: none;
-    }
+    }*/
+    /*
     .list-question{
         overflow-x: auto;
     }
@@ -1089,7 +1493,7 @@ body,html, #displayDoc{
         margin-top: -1px;
     }
     .blockContenuQuestion{
-        width: 100%;
+        width: 84%;
     }
     #show_question_title{
         font-size: 23px;
@@ -1100,25 +1504,25 @@ body,html, #displayDoc{
     .nbLike, .nbDisLike{
         font-size: 1.3em;
     }
-    .addQuestionMobile{
+   /* .addQuestionMobile{
         display: inline;
-    }
+    }*/
     .auteur{
         padding-top: 20px;
     }
     .plus-add-question{
         display: inline;
     }
-    .icon-add-question, .new-question-label{
+   /* .icon-add-question, .new-question-label{
         display: none;
-    }
-    .addQuestion{
+    }*/
+   /* .addQuestion{
         background-image: none;
         color: white;
-    }
-    .new-question-label{
+    }*/
+   /* .new-question-label{
         display: none;
-    }
+    }*/
     .contenuQuestion{
         width: 148px;
     }
@@ -1133,34 +1537,35 @@ body,html, #displayDoc{
     .form-auteur-input{
         width: 100%;
     }
-    .dashBoardBody{
-        height: auto;
-    }
+
 }
 
 
 
 @media screen and (orientation:landscape) and (max-width: 320px){
     .logo{
-        left: 28%;
+        /*left: 28%;*/
     }
     body, .body-app{
         position: inherit;
         background-size: auto;
 
     }
-    .addQuestionMobile{
+   /* .addQuestionMobile{
         font-size: 0.4em;
-    }
+    }*/
     #show_question_title{
         font-size: 21px;
     }
     .list-question{
         height: 500px;
     }
-    .dashBoardBody{
-        height: auto;
+    .body-app{
+        /*position: fixed;*/
+        /*height: 100%;*/
+        background-size: 100% 100%;
     }
+  
 }
 
 @media screen and (orientation:landscape) and (max-width: 774px){
@@ -1173,30 +1578,35 @@ body,html, #displayDoc{
         position: inherit;
         background-size: auto;
     }
+    .body-app{
+        /*position: fixed;*/
+        /*height: 100%;*/
+        background-size: 100% 100%;
+    }
     #logo{
         padding-top: 6px;
     }
-    #containerLogin{
+   /* #containerLogin{
         height: 87%;
-    }
+    }*/
     .banner{
         background-size: 100% 59%;
-        width: 100%;
-        margin-bottom: -87px;
-        height: 211px;
+        /*width: 100%;*/
+        margin-bottom: -79px;
+        height: 190px;
     }
     .nameApplication{
-        margin: auto;
-        width: 147px;
+        /*margin: auto;*/
+        /*width: 147px;*/
         padding-bottom: 5px;
     }
     .nameApplication h1, .nameEvent{
         font-size: 1.8em;
     }
     .logo{
-        top: -48px;
-        left: 42%;
-        width: 96px;
+        top: -78px;
+        /*left: 42%;*/
+        /*width: 96px;*/
         height: 97px;
     }
     .logo img{
@@ -1205,12 +1615,12 @@ body,html, #displayDoc{
     }
     .nameEvent{
         margin-top: 11px;
-        margin-right: 1px;
+        /*margin-right: 1px;*/
     }
 
     .menu{
         display: inline;
-        top: 196px;
+        /*top: 196px;*/
         position: absolute;
     }
     .menu:hover{
@@ -1218,7 +1628,7 @@ body,html, #displayDoc{
     }
 
     .infoEvent{
-        display: none;
+     /*   display: none;
         float: right;
         background-color: rgba(255, 255, 255, 0.4);
         padding: 6px 14px 6px 12px;
@@ -1226,33 +1636,34 @@ body,html, #displayDoc{
         margin-top: -36px;
         margin-left: 0px;
         width: 100%;
-        margin-right: 4px;
+        margin-right: 4px;*/
     }
 
-    .info-event, #hour, #minute, #fin{
+    .info-event, #hour, #minute, #fin, #daysMobile, #hourMobile, #minuteMobile, #finMobile{
         font-size: 1.1em;
     }
     .decompte span:nth-child(2), .nb-question-posee span:nth-child(2){
         display: none;
     }
-    .info-event, .info-decompte, #days, #hour, #minute, #fin{
+    .info-event, .info-decompte, #days, #hour, #minute, #fin, #daysMobile, #hourMobile, #minuteMobile, #finMobile{
         display: inline-block;
     }
 
-    #containerQuestion{
+  /*  .containerQuestion{
         width: 104%;
         height: 100%;
-        margin-top: -56px;
+        margin-top: -56px !important;
         float: none;
-    }
+    }*/
     .list-question{
         overflow-x: auto;
+        height:130% !important;
     }
     .list-question section:first-child{
         margin-top: -1px;
     }
     .blockContenuQuestion{
-        width: 100%;
+        width: 84%;
     }
     #show_question_title{
         font-size: 23px;
@@ -1263,25 +1674,25 @@ body,html, #displayDoc{
     .nbLike, .nbDisLike{
         font-size: 1.3em;
     }
-    .addQuestionMobile{
+   /* .addQuestionMobile{
         display: inline;
-    }
+    }*/
     .auteur{
         padding-top: 20px;
     }
     .plus-add-question{
         display: inline;
     }
-    .icon-add-question, .new-question-label{
+   /* .icon-add-question, .new-question-label{
         display: none;
-    }
-    .addQuestion{
+    }*/
+    /*.addQuestion{
         background-image: none;
         color: white;
-    }
-    .new-question-label{
+    }*/
+    /*.new-question-label{
         display: none;
-    }
+    }*/
     .contenuQuestion{
         width: 148px;
     }
@@ -1296,24 +1707,28 @@ body,html, #displayDoc{
     .form-auteur-input{
         width: 100%;
     }
-    .dashBoardBody{
-        height: auto;
-    }
+    .bouttonMenu{
+    margin-top:85px;
+}
+ 
 }
 
 @media screen and (orientation:landscape) and (max-width: 1024px){
     .infoEvent{
-        margin-top: -49px;
+        /*margin-top: -49px;*/
     }
 }
 
 @media screen and (orientation:portrait) and (min-width: 501px){
 
     .infoEvent{
-        width: 23%;
+        /*width: 23%;*/
     }
-    .question, .blockContenuQuestion{
+    .question {
         width: 100%;
+    }
+    .blockContenuQuestion{
+        width: 71%;
     }
     .list-question{
         overflow-x: auto;
@@ -1321,4 +1736,439 @@ body,html, #displayDoc{
     .auteur{
         padding-right: 17px;
     }
+}
+
+
+@media only screen and (max-width : 1200px) {
+
+    }
+
+    /* Medium Devices, Desktops */
+    @media only screen and (max-width : 992px) {
+
+    }
+
+    /* Small Devices, Tablets */
+    @media only screen and (max-width : 767px) {
+    .buttonMenu{
+        margin-top: 90px;
+    }
+    }
+
+    /* Extra Small Devices, Phones */ 
+    @media only screen and (max-width : 480px) and (max-height: 480px){
+    .list-question{
+        overflow-x: auto;
+        height:150% !important;
+    }
+    }
+
+
+        @media only screen and (max-width : 480px) and (min-width: 321px){
+        .bienvenue{
+        margin-top: 0px;
+        margin-bottom: 4px;
+    }
+
+    body, .body-app{
+        /*position: inherit;*/
+        background-size: auto;
+
+    }
+    .body-app{
+        position: fixed;
+        height: 100%;
+        background-size: 100% 100%;
+    }
+    #logo{
+        padding-top: 6px;
+    }
+  /*  #containerLogin{
+        height: 87%;
+    }*/
+    .banner{
+        background-size: 100% 59%;
+        width: 100%;
+        margin-bottom: -79px;
+        height: 190px;
+    }
+    .nameApplication{
+        /*margin: auto;*/
+        /*width: 147px;*/
+        padding-bottom: 5px;
+    }
+    .nameApplication h1, .nameEvent{
+        font-size: 1.8em;
+    }
+    .logo{
+        top: -48px;
+        /*left: 42%;*/
+        /*width: 96px;*/
+        height: 97px;
+    }
+    .logo img{
+        width: 98px;
+        height: 98px;
+    }
+    .nameEvent{
+        margin-top: 11px;
+        /*margin-right: 1px;*/
+    }
+
+    .menu{
+        display: inline;
+        /*top: 115px;*/
+        position: absolute;
+    }
+    .menu:hover{
+        cursor: pointer;
+    }
+
+    .infoEvent{
+        /*display: none;
+        float: left;
+        background-color: rgba(255, 255, 255, 0.4);
+        padding: 6px 14px 6px 12px;
+        border-radius: 16px;
+        margin-top: 36px;
+        margin-left: 0px;
+        width: 100%;
+        margin-right*/: 4px;
+    }
+
+    .info-event, #hour, #minute, #fin, #daysMobile, #hourMobile, #minuteMobile, #finMobile{
+        font-size: 1.1em;
+    }
+    .decompte span:nth-child(2), .nb-question-posee span:nth-child(2){
+        display: none;
+    }
+    .info-event, .info-decompte, #days, #hour, #minute, #fin, #daysMobile, #hourMobile, #minuteMobile, #finMobile{
+        display: inline-block;
+    }
+
+  /*  .containerQuestion{
+        width: 104%;
+        height: 100%;
+        margin-top: -56px !important;
+        float: none;
+    }*/
+    .list-question{
+        overflow-x: auto;
+    }
+    .list-question section:first-child{
+        margin-top: -1px;
+    }
+    .blockContenuQuestion{
+        width: 74%;
+    }
+    #show_question_title{
+        font-size: 23px;
+    }
+    .modal-body-form{
+        padding-bottom: 48px;
+    }
+    .nbLike, .nbDisLike{
+        font-size: 1.3em;
+    }
+   /* .addQuestionMobile{
+        display: inline;
+    }*/
+    .auteur{
+        padding-top: 20px;
+        width: 75%;
+    }
+    .plus-add-question{
+        display: inline;
+    }
+   /* .icon-add-question, .new-question-label{
+        display: none;
+    }*/
+   /* .addQuestion{
+        background-image: none;
+        color: white;
+    }*/
+   /* .new-question-label{
+        display: none;
+    }*/
+    .contenuQuestion{
+        width: 148px;
+    }
+    .question{
+        margin: -21px 0px 20px 0px;
+        width: 100%
+    }
+    .msgInfo{
+        width: 249px;
+        right: 10%;
+    }
+    .form-auteur-input{
+        width: 100%;
+    }
+
+    }
+
+    /* Custom, iPhone Retina */ 
+    @media only screen and (max-width : 320px) {
+        .bienvenue{
+        margin-top: 0px;
+        margin-bottom: 4px;
+    }
+
+    body, .body-app{
+        /*position: inherit;*/
+        background-size: 100% 100%;
+
+    }
+    .body-app{
+        /*position: fixed;*/
+        /*height: 100%;*/
+        background-size: 100% 100%;
+
+
+    }
+    #logo{
+        padding-top: 6px;
+    }
+ /*   #containerLogin{
+        height: 87%;
+    }*/
+    .banner{
+        background-size: 100% 59%;
+        width: 100%;
+        margin-bottom: -79px;
+        height: 190px;
+    }
+    .nameApplication{
+        /*margin: auto;*/
+        /*width: 147px;*/
+        padding-bottom: 5px;
+    }
+    .nameApplication h1, .nameEvent{
+        font-size: 1.8em;
+    }
+    .logo{
+        top: -48px;
+        /*left: 42%;*/
+        /*width: 96px;*/
+        height: 97px;
+    }
+    .logo img{
+        width: 98px;
+        height: 98px;
+    }
+    .nameEvent{
+        margin-top: 11px;
+        /*margin-right: 1px;*/
+    }
+
+    .menu{
+        display: inline;
+        /*top: 50px;*/
+        position: absolute;
+    }
+    .menu:hover{
+        cursor: pointer;
+    }
+
+    .infoEvent{
+        /*display: none;
+        float: left;
+        background-color: rgba(255, 255, 255, 0.4);
+        padding: 6px 14px 6px 12px;
+        border-radius: 16px;
+        margin-top: 36px;
+        margin-left: 0px;
+        width: 100%;
+        margin-right: 4px;*/
+    }
+
+    .info-event, #hour, #minute, #fin, #daysMobile, #hourMobile, #minuteMobile, #finMobile{
+        font-size: 1.1em;
+    }
+    .decompte span:nth-child(2), .nb-question-posee span:nth-child(2){
+        display: none;
+    }
+    .info-event, .info-decompte, #days, #hour, #minute, #fin, #daysMobile, #hourMobile, #minuteMobile, #finMobile{
+        display: inline-block;
+    }
+
+ /*   .containerQuestion{
+        width: 104%;
+        height: 100%;
+        margin-top: 56px !important;
+        float: none;
+    }*/
+    
+   /* .list-question section:first-child{
+        margin-top: -1px;
+    }*/
+    .blockContenuQuestion{
+        width: 84%;
+    }
+    #show_question_title{
+        font-size: 23px;
+    }
+    .modal-body-form{
+        padding-bottom: 48px;
+    }
+    .nbLike, .nbDisLike{
+        font-size: 1.3em;
+    }
+   /* .addQuestionMobile{
+        display: inline;
+    }*/
+    .auteur{
+        padding-top: 20px;
+        width: 75%;
+    }
+    .plus-add-question{
+        display: inline;
+    }
+   /* .icon-add-question, .new-question-label{
+        display: none;
+    }
+    .addQuestion{
+        background-image: none;
+        color: white;
+    }
+    .new-question-label{
+        display: none;
+    }*/
+    .contenuQuestion{
+        width: 148px;
+    }
+    .question{
+        margin: -21px 0px 20px 0px;
+        width: 100%
+    }
+    .msgInfo{
+        width: 249px;
+        right: 10%;
+    }
+    .form-auteur-input{
+        width: 100%;
+    }
+    }
+
+
+
+
+
+
+.rowEvent{
+    padding-top:14%;
+    padding-bottom: 1%;
+}
+.nameEvent{
+    line-height: 60%;
+    /*padding-top:5%;*/
+}
+
+.containerQuestion{
+    margin-top:-9%;
+    /*height:40%;*/
+    position: relative;
+
+}
+
+.list-question{
+        overflow-x: auto;
+        /*height: 100%;*/
+        border-radius: 15px ;
+    }
+
+.rowContent{
+    /*height:90%;*/
+    margin-top: 10px;
+}
+
+.dashBoardBody{
+    background-color: rgba(255,255,255, 0.8);
+    height: 100%;
+    /*margin-bottom: 30px;*/
+
+}
+
+#days, #hour, #minute, #fin, #daysMobile, #hourMobile, #minuteMobile, #finMobile{
+    text-align: center;
+    padding-top: 6px;
+}
+
+.info-event, #hour, #minute, #fin, #daysMobile, #hourMobile, #minuteMobile, #finMobile{
+    color: #565656;
+    font-size: 90%;
+    font-weight: bold;
+    text-align: center;
+    padding-top: 6px;
+}
+
+.addQuestion{
+    border-radius: 9px;
+    border: 0px;
+    /* IE10 Consumer Preview */ 
+    background-image: -ms-linear-gradient(top left, #E5E6E6 0%, #AAAAAA 100%);
+    /* Mozilla Firefox */ 
+    background-image: -moz-linear-gradient(top left, #E5E6E6 0%, #AAAAAA 100%);
+    /* Opera */ 
+    background-image: -o-linear-gradient(top left, #E5E6E6 0%, #AAAAAA 100%);
+    /* Webkit (Safari/Chrome 10) */ 
+    background-image: -webkit-gradient(linear, left top, right bottom, color-stop(0, #E5E6E6), color-stop(1, #AAAAAA));
+    /* Webkit (Chrome 11+) */ 
+    background-image: -webkit-linear-gradient(top left, #E5E6E6 0%, #AAAAAA 100%);
+    /* W3C Markup, IE10 Release Preview */ 
+    background-image: linear-gradient(to bottom right, #E5E6E6 0%, #AAAAAA 100%);
+    /*margin-top: 26px;*/
+    color: #606060;
+
+}
+
+
+.addQuestion:hover{
+    cursor: pointer;
+
+}
+
+.addQuestionMobile{
+    /*display: none;*/
+    font-size: 50%;
+    position: relative;
+    /*top: 4px;*/
+    float: right;
+    /*margin-right: 6px;*/
+}
+.buttonAddQuestionMobile{
+    margin-top: 2px;
+}
+
+.new-question-label{
+    color:#000;
+    /*font-weight: bold;*/
+}
+
+.col-centered{
+    float: none;
+    margin: 0 auto;
+}
+.icon-add-question{
+    /*margin:0;*/
+    margin-top: -2px;
+}
+
+
+
+#menuMobile{
+margin-top: -7%;
+margin-bottom: 50px;
+}
+
+.labelEvent{
+    margin-top: -20px;
+}
+
+.bouttonMenu{
+    margin-top:75px;
+}
+
+.label-info-color{
+    background-color: #01948E;
 }

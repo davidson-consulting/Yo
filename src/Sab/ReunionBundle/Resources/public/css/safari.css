@@ -14,7 +14,7 @@ body:first-of-type .auteur{
     float: right;
 }
 body:first-of-type .contenuQuestion{
-    width: 100%;
+    width: 90%;
 }
 
 

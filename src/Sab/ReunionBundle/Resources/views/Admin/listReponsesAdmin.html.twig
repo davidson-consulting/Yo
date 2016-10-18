@@ -1,0 +1,34 @@
+{% extends "ReunionBundle:Admin:index.html.twig" %}
+{% set idquestion = question.getId() %}
+{% set idcommentaire = commentaire.getId() %}
+{% set idevent = event.getId() %}
+{% set labelEvent = event.getLabelEvent() %}
+
+{% block title_page %}
+    <li class="list-question-admin">
+        <a href="{{path('_event_detail',{'id':idevent})}}">{{labelEvent}}</a> <span class="next-button"> > </span><span class="glyphicon glyphicon-th-list icon-list-question-admin"><span><a href="{{ path('_event_list_question',{'id':idevent})}}">Liste des questions</a> <span class="next-button-bis"> > </span><span class="glyphicon glyphicon-th-list icon-list-commentaire-admin"> Liste des commentaires</span> > </span><span class="glyphicon glyphicon-th-list icon-list-commentaire-admin"> Liste des réponses</span>
+    </li>    
+{% endblock %}
+{%block event_list_question %}
+
+<!-- liste des réponses aux commentaires -->
+
+    <div class="container">
+        <table class="table-commentaire-admin" data-url="{{path("_load_reponse_json",{'id':idcommentaire})}}" 
+               data-sort-name="datePublication" data-sort-order="desc" data-toggle="table" data-show-refresh="true" 
+               data-show-toggle="true" data-show-columns="true" data-search="true" data-row-style="rowStyleFocus"
+               data-pagination="true">
+            <thead>
+                <tr>
+                    <th data-field="texte" data-align="center" data-sortable="true">Description</th>
+                    <th data-field="auteur" data-sortable="true"><span class="glyphicon glyphicon-user likeButton-admin"></span>Auteur</th>
+                    <th data-field="datePublication" data-sortable="true"><span class="glyphicon glyphicon-time datePublication-admin"></span>Date de publication</th>
+                    <th data-field="delete"><span class="glyphicon glyphicon-trash"></span>Supprimer</th>
+                    <th data-field="modifier"><span class="glyphicon glyphicon-edit"></span>Modifier</th>
+                </tr>
+            </thead>
+        </table>
+    </div>
+               
+                    
+{% endblock %}

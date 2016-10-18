@@ -67,7 +67,7 @@
 //  cloturer et/ou ouvrire un événement
 function switchEvent(val_this) {
     var statut_event = val_this.getAttribute('data-statut');
-    var id_event = val_this.getAttribute('data-event'); 
+    var id_event = val_this.getAttribute('data-event');
     if (statut_event === "on") {
         switchEventOn(id_event);
     }
@@ -151,7 +151,7 @@ $(document).ready(function () {
     $(".form-control-date").datetimepicker({
         language: 'fr',
     });
-    focusQuestion();
+    //focusQuestion();
 })
 
 
@@ -337,3 +337,99 @@ function modifierQuestion(question, idEvent) {
         }
     });
 }
+
+// Fonction relative aux commentaires
+
+function listerCommentaire (question) 
+{   
+    url=Routing.generate ('_list_commentaire' ,{'id':question});
+    window.document.location.href=url;
+    
+}
+
+function listerReponses (commentaire) 
+{   
+    url=Routing.generate ('_list_reponses' ,{ 'id' : commentaire});
+    window.document.location.href=url;
+    
+}
+
+function deleteCommentaire (id, idQuestion){
+    var confirmDelete = confirm("Voulez-vous vraiment supprimer ce commentaire ?");
+    if (confirmDelete === true) {
+        $.ajax({
+            type: 'POST',
+            url: Routing.generate('_delete_commentaire', {'id': id}),
+            success: function (res) {
+                console.log(res);
+            },
+            error: function () {
+                console.log("error");
+            },
+            complete: function () {
+                $('.table-commentaire-admin').bootstrapTable('refresh',
+                        {url: Routing.generate('_load_commentaire_json', {'id': idQuestion})}
+                );
+            }
+        });
+    }
+}
+
+function modifierCommentaire(commentaire, idQuestion) {
+
+    $.ajax({
+        type: 'POST',
+        url: Routing.generate('_modification_commentaire', {'id': commentaire}),
+        success: function (res) {
+            bootbox.dialog({
+                title: "Modifier le commentaire:",
+                message: "<div class='row'>" +
+                        "<div class='col-md-12'>" +
+                        "<textarea id='contenuCommentaireModifier' rows='4' cols='80'>" +
+                        res +
+                        "</textarea>" +
+                        "</div>" +
+                        "</div>",
+                buttons: {
+                    success: {
+                        label: "Modifier",
+                        className: "btn-success",
+                        callback: function () {
+                            if ($('#contenuCommentaireModifier').val() == "") {
+                                bootbox.alert("Le champs texte ne doit pas être vide");
+                            } else {
+                                //ajax
+                                $.ajax({
+                                    type: 'POST',
+                                    data: {'idCommentaire': commentaire, 'texte': $('#contenuCommentaireModifier').val()},
+                                    dataType: 'json',
+                                    url: Routing.generate('_save_modification_commentaire'),
+                                    success: function (res) {
+                                        bootbox.alert("La modification de votre commentaire a bien été prise en compte");
+                                    },
+                                    complete: function () {
+                                        $('.table-commentaire-admin').bootstrapTable('refresh',
+                                                {url: Routing.generate('_load_commentaire_json', {'id': idQuestion})}
+                                        );
+                                    }
+                                });
+                            }
+                        }
+                    },
+                }
+            });
+
+        },
+        error: function () {
+            console.log("error");
+        },
+        complete: function () {
+            $('.table-commentaire-admin').bootstrapTable('refresh',
+                    {url: Routing.generate('_load_commentaire_json', {'id': idQuestion})}
+            );
+        }
+    });
+}
+
+
+
